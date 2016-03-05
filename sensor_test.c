@@ -24,8 +24,13 @@ void VendorRequests(void) {
     */
     switch (USB_setup.bRequest) {
         case GET_DISTANCE:
-            BD[EP0IN].address[0] = DISTANCE.b[0];
-            BD[EP0IN].address[1] = DISTANCE.b[1];
+            if (!sw_read(&sw3)) {
+                BD[EP0IN].address[0] = DISTANCE.b[0];
+                BD[EP0IN].address[1] = DISTANCE.b[1];
+            } else {
+                BD[EP0IN].address[0] = 0;
+                BD[EP0IN].address[1] = 0;
+            }
             BD[EP0IN].bytecount = 2;
             BD[EP0IN].status = 0xC8;
             break;

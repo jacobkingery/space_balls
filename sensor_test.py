@@ -98,21 +98,21 @@ except IndexError:
 
 ir = IRSensor(fname)
 
-readings = ir.calibrate_sensor()
-ir.plot_calibration(readings)
+# readings = ir.calibrate_sensor()
+# ir.plot_calibration(readings)
 
-# i = 0
-# readings = []
-# while True:
-#     time.sleep(1)
-#     r = ir.get_readings()
+i = 0
+readings = []
+while True:
+    i += 1
+    r = ir.get_readings()
 
 #     # Plotting the readings slows things down significantly,
 #     # but can be helpful to look at when not capturing data.
-#     ir.plot_readings(r)
+    # ir.plot_readings(r)
 
-#     readings.append(r)
-#     if i > 50:
-#         ir.write_readings(readings)
-#         i = 0
-#         readings = []
+    readings.append(r)
+    if i > 50:
+        ir.write_readings(readings)
+        i = 0
+        readings = []
