@@ -16,6 +16,8 @@ uint16_t counter;
 
 _LED *green_led;
 _PIN *camera_pin;
+_PIN *l_trigger;
+_PIN *r_trigger;
 
 void shoot(void) {
     if (state != last_state) {  // if we are entering the state, do initialization stuff
@@ -29,7 +31,7 @@ void shoot(void) {
         led_off(green_led);
     }
     // Check for state transitions
-    if (sw_read(&sw1) == 1) {
+    if (pin_read(l_trigger) || pin_read(r_trigger)) {
         state = rest;
     }
 
@@ -44,7 +46,7 @@ void rest(void) {
     }
 
     // Check for state transitions
-    if (sw_read(&sw1) == 0) {
+    if (!pin_read(l_trigger) || !pin_read(r_trigger)) {
         state = shoot;
     }
 
@@ -59,6 +61,8 @@ int16_t main(void) {
 
     green_led = &led2;
     camera_pin = &D[13];
+    l_trigger = &D[12];
+    r_trigger = &D[11];
 
     state = rest;
     last_state = (STATE_HANDLER_T)NULL;
