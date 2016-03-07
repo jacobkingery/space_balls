@@ -31,7 +31,7 @@ void shoot(void) {
         led_off(green_led);
     }
     // Check for state transitions
-    if (pin_read(l_trigger) || pin_read(r_trigger)) {
+    if (pin_read(l_trigger) && pin_read(r_trigger)) {
         state = rest;
     }
 
