@@ -7,7 +7,7 @@ env = Environment(PIC = '24FJ128GB206',
                   PROGSUFFIX = '.elf',
                   CFLAGS = '-g -omf=elf -x c -mcpu=$PIC',
                   LINKFLAGS = '-omf=elf -mcpu=$PIC -Wl,--script="app_p24FJ128GB206.gld"',
-                  CPPPATH = '../lib')
+                  CPPPATH = ['../lib', './components'])
 #Path for OSX
 if sys.platform == 'darwin':
    env.PrependENVPath('PATH', '/Applications/microchip/xc16/v1.25/bin')
@@ -25,6 +25,8 @@ list = Builder(action = 'xc16-objdump -S -D $SOURCE > $TARGET',
 env.Append(BUILDERS = {'List' : list})
 
 env.Program('space_balls', ['space_balls.c',
+            './components/gun.c',
+            './components/launcher.c',
             '../lib/descriptors.c',
             '../lib/ui.c',
             '../lib/timer.c',
