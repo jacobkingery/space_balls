@@ -17,7 +17,7 @@ int16_t main(void) {
     init_timer();
     init_game(&led2, &timer5);
     init_gun(&led1, &D[0], &D[1], &D[2]);
-    init_launcher(&sw1, &sw2, &D[5], &D[6]);
+    init_launcher(&D[3], &D[4], &D[5]);
 
     int level;
     while (1) {
