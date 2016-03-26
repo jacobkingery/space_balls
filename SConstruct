@@ -25,6 +25,7 @@ list = Builder(action = 'xc16-objdump -S -D $SOURCE > $TARGET',
 env.Append(BUILDERS = {'List' : list})
 
 env.Program('space_balls', ['space_balls.c',
+            './components/game.c',
             './components/gun.c',
             './components/launcher.c',
             '../lib/descriptors.c',

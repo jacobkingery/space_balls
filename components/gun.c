@@ -18,7 +18,7 @@ void shoot_gun(void) {
     }
     // Check for state transitions
     if (sw_read(&sw1) == 1) {
-        state_gun = rest_gun;
+        gun.state = rest_gun;
     }
 
     if (gun.state != gun.last_state) {  // if we are leaving the state, do clean up stuff
@@ -33,14 +33,14 @@ void rest_gun(void) {
 
     // Check for state transitions
     if (pin_read(gun.l_trigger) && pin_read(gun.r_trigger)) {
-        gun.state = gun.shoot;
+        gun.state = shoot_gun;
     }
 
     /*if (state_gun != last_state_gun) {  // if we are leaving the state, do clean up stuff
       }*/
 }
 
-void init_gun(_LED *shoot_led, _PIN *camera, _PIN l_trigger, _PIN r_trigger) {
+void init_gun(_LED *shoot_led, _PIN *camera, _PIN *l_trigger, _PIN *r_trigger) {
     gun.shoot_led = shoot_led;
     gun.camera = camera;
     gun.l_trigger = gun.l_trigger;
@@ -50,6 +50,7 @@ void init_gun(_LED *shoot_led, _PIN *camera, _PIN l_trigger, _PIN r_trigger) {
     gun.last_state = (STATE_HANDLER_T)NULL;
 }
 
-void run_gun(void) {
+void run_gun(uint8_t level) {
+    gun.level = level;
     gun.state();
 }

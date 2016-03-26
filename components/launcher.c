@@ -52,7 +52,7 @@ void rest_launcher(void) {
       }*/
 }
 
-void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *load_motor, _Pin *launch_motor) {
+void init_launcher(_SW *load_sensor, _SW *launch_sensor, _PIN *load_motor, _PIN *launch_motor) {
 
     pin_digitalOut(load_motor);
     pin_digitalOut(launch_motor);
@@ -66,6 +66,7 @@ void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *load_motor, _Pi
     launcher.last_state = (STATE_HANDLER_T)NULL;
 }
 
-void run_launcher(void) {
+void run_launcher(uint8_t level) {
+    launcher.level = level;
     launcher.state();
 }

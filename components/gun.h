@@ -5,16 +5,19 @@
 #include "ui.h"
 #include "state.h"
 
-void init_gun(void);
-void run_gun(void);
+void init_gun(_LED *shoot_led, _PIN *camera, _PIN *l_trigger, _PIN *r_trigger);
+void run_gun(uint8_t level);
 void shoot_gun(void);
 void rest_gun(void);
 
 typedef struct {
     _LED *shoot_led;
     _PIN *camera;
-    STATE_HANDLER_T *state;
-    STATE_HANDLER_T *last_state;
+    _PIN *l_trigger;
+    _PIN *r_trigger;
+    uint8_t level;
+    STATE_HANDLER_T state;
+    STATE_HANDLER_T last_state;
 } Gun;
 
 extern Gun gun;
