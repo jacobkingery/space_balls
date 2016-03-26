@@ -5,8 +5,9 @@
 #include "ui.h"
 
 Gun gun;
+
 void shoot_gun(void) {
-    if (gun.state != gun.last_state) {  // if we are entering the state_gun, do initialization stuff
+    if (gun.state != gun.last_state) {  // if we are entering the state, do initialization stuff
         gun.last_state = gun.state;
     }
 
@@ -43,8 +44,8 @@ void rest_gun(void) {
 void init_gun(_LED *shoot_led, _PIN *camera, _PIN *l_trigger, _PIN *r_trigger) {
     gun.shoot_led = shoot_led;
     gun.camera = camera;
-    gun.l_trigger = gun.l_trigger;
-    gun.r_trigger = gun.r_trigger;
+    gun.l_trigger = l_trigger;
+    gun.r_trigger = r_trigger;
 
     gun.state = rest_gun;
     gun.last_state = (STATE_HANDLER_T)NULL;
