@@ -10,6 +10,7 @@ void level_game(void) {
     if (game.state != game.last_state) {  // if we are entering the state_game, do initialization stuff
         game.last_state = game.state;
         game.level++;
+        led_toggle(game.level_led);
     }
 
     // Check for state transitions
@@ -24,9 +25,7 @@ void level_game(void) {
 void rest_game(void) {
     if (game.state != game.last_state) {  // if we are entering the state, do intitialization stuff
         game.last_state = game.state;
-        if (game.level%2){
-            led_on(game.level_led);
-        }
+        game.counter = 0;
     }
 
     //run state logic
@@ -41,7 +40,6 @@ void rest_game(void) {
     }
 
     if (game.state != game.last_state) {  // if we are leaving the state, do clean up stuff
-        led_off(game.level_led);
     }
 }
 
