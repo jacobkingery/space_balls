@@ -23,9 +23,9 @@ int16_t main(void) {
 
     int level;
     while (1) {
-        set_display(0, 5555)
-        level = run_game();
-        run_gun(level);
-        run_launcher(level);
+        set_display(1, 5555);
+        // level = run_game();
+        // run_gun(level);
+        // run_launcher(level);
     }
 }

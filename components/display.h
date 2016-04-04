@@ -4,15 +4,16 @@
 #include "pin.h"
 #include "spi.h"
 
-void init_display(_SPI *spi, _PIN *cs, _PIN *din, _PIN *clk);
-void set_display(uint8_t start, uint8_t value);
+void init_display(_SPI *spi, _PIN *ncs, _PIN *din, _PIN *clk);
+void set_display(uint8_t start, uint16_t value);
 
 typedef struct {
-    _SPI spi;
-    _PIN cs;
-    _PIN din;
-    _PIN clk;
+    _SPI *spi;
+    _PIN *ncs;
+    _PIN *din;
+    _PIN *clk;
 } Display;
 
-extern Display display
+extern Display display;
+
 #endif
