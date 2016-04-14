@@ -1,5 +1,6 @@
 #ifndef _GUN_H_
 #define _GUN_H_
+
 #include <stdint.h>
 #include "pin.h"
 #include "ui.h"
