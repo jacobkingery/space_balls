@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "pin.h"
 #include "ui.h"
+#include "timer.h"
 #include "state.h"
 
 void init_gun(_LED *shoot_led, _PIN *camera, _PIN *l_trigger, _PIN *r_trigger, _TIMER *rof_timer);

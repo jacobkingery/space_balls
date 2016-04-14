@@ -15,8 +15,6 @@ void game_over(void);
 typedef struct {
     _LED *level_led;
     _TIMER *level_timer;
-    uint8_t hit_flag;
-    uint8_t level_ticks;
     uint8_t level_ticks;
     uint8_t level_limit;
     uint8_t level;
@@ -24,6 +22,7 @@ typedef struct {
     uint8_t decay_ticks;
     uint8_t decay_limit;
     uint8_t life;
+    uint8_t hit_flag;
     STATE_HANDLER_T state;
     STATE_HANDLER_T last_state;
 } Game;

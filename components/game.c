@@ -13,8 +13,8 @@ void level_game(void) {
     if (game.state != game.last_state) {  // if we are entering the state_game, do initialization stuff
         game.last_state = game.state;
         game.level++;
-        game.life = 15;;
-        game.decay_limit = 50 - floor(game.level^1.25);
+        game.life = 15;
+        game.decay_limit = 50 - floor(pow((double)game.level, 1.25));
         led_toggle(game.level_led);
     }
 
@@ -31,6 +31,7 @@ void decay_game(void) {
     if (game.state != game.last_state) {  // if we are entering the state_game, do initialization stuff
         game.last_state = game.state;
         game.life--;
+        game.decay_ticks = 0;
         led_toggle(game.level_led);
     }
 
@@ -46,12 +47,20 @@ void decay_game(void) {
 void rest_game(void) {
     if (game.state != game.last_state) {  // if we are entering the state, do intitialization stuff
         game.last_state = game.state;
-        game.counter = 0;
+        game.level_ticks = 0;
     }
 
     //run state logic
 
     // Check for state transitions
+    if (timer_flag(game.decay_timer)) {
+        timer_lower(game.decay_timer);
+        game.decay_ticks++;
+        if(game.decay_ticks == game.decay_limit){
+            game.state = decay_game;
+        }
+    }
+
     if (timer_flag(game.level_timer)) {
         timer_lower(game.level_timer);
         game.level_ticks++;
@@ -60,19 +69,11 @@ void rest_game(void) {
         }
     }
 
-    if (timer_flag(game.decay_timer)) {
-        timer_lower(game.decay_timer);
-        game.decay_ticks++;
-        if(game.decay_ticks == game.decay_limit){
-            game.state = decay_game(void);
-        }
-    }
-
     if (game.state != game.last_state) {  // if we are leaving the state, do clean up stuff
     }
 }
 
-void init_game(_LED *level_led, _TIMER *timer, _TIMER *decay_timer) {
+void init_game(_LED *level_led, _TIMER *level_timer, _TIMER *decay_timer) {
     game.level_led = level_led;
 
     game.hit_flag = 0;

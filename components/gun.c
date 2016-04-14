@@ -2,6 +2,7 @@
 #include "gun.h"
 #include "common.h"
 #include "pin.h"
+#include "timer.h"
 #include "ui.h"
 
 Gun gun;
