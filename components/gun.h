@@ -6,7 +6,7 @@
 #include "ui.h"
 #include "state.h"
 
-void init_gun(_LED *shoot_led, _PIN *camera, _PIN *l_trigger, _PIN *r_trigger);
+void init_gun(_LED *shoot_led, _PIN *camera, _PIN *l_trigger, _PIN *r_trigger, _TIMER *rof_timer);
 void run_gun(uint8_t level);
 void shoot_gun(void);
 void rest_gun(void);
@@ -16,6 +16,7 @@ typedef struct {
     _PIN *camera;
     _PIN *l_trigger;
     _PIN *r_trigger;
+    _TIMER *rof_timer;
     uint8_t level;
     STATE_HANDLER_T state;
     STATE_HANDLER_T last_state;

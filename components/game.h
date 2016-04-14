@@ -6,17 +6,24 @@
 #include "timer.h"
 #include "state.h"
 
-void init_game(_LED *level_led, _TIMER *timer);
-uint8_t run_game(void);
+void init_game(_LED *level_led, _TIMER *level_timer, _TIMER *decay_timer);
+uint8_t run_game(uint8_t hit_flag);
 void rest_game(void);
 void level_game(void);
 void game_over(void);
 
 typedef struct {
     _LED *level_led;
-    _TIMER *timer;
-    uint8_t counter;
+    _TIMER *level_timer;
+    uint8_t hit_flag;
+    uint8_t level_ticks;
+    uint8_t level_ticks;
+    uint8_t level_limit;
     uint8_t level;
+    _TIMER *decay_timer;
+    uint8_t decay_ticks;
+    uint8_t decay_limit;
+    uint8_t life;
     STATE_HANDLER_T state;
     STATE_HANDLER_T last_state;
 } Game;

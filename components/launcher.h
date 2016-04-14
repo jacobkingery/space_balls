@@ -5,15 +5,20 @@
 #include "ui.h"
 #include "state.h"
 
-void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *launch_motor);
+void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *launch_motor, _TIMER *rol_timer);
 void run_launcher(uint8_t level);
-void launch_launcher(void);
+void level_launcher(void);
 void rest_launcher(void);
 
 typedef struct {
     _PIN *load_sensor;
     _PIN *launch_sensor;
     _PIN *launch_motor;
+    _TIMER *rol_timer;
+    uint8_t *rol_ticks;
+    uint8_t *rol_limit;
+    uint8_t chaos;
+    uint8_t chaos_limit;
     uint8_t level;
     STATE_HANDLER_T state;
     STATE_HANDLER_T last_state;
