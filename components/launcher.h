@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include "pin.h"
 #include "ui.h"
+#include "timer.h"
 #include "state.h"
 
 void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *launch_motor, _TIMER *rol_timer);

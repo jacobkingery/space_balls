@@ -26,20 +26,18 @@ int16_t main(void) {
     init_oc();
 
     init_display(&i2c1, 0x70, 0x71);
-    init_game(&led2, &timer5);
-    init_gun(&led1, &D[0], &D[1], &D[2]);
-    init_launcher(&D[3], &D[4], &D[5]);
+    init_game(&led2, &timer1, &timer2);
+    init_gun(&led1, &D[0], &D[1], &D[2], &timer3);
+    init_launcher(&D[3], &D[4], &D[5], &timer4);
     init_audio(&D[6]);
-
 
     init_pix(&D[13], &timer4, 30, 0.05);
 
-    timer_every(&timer3, 0.01, __test_pixels_1);  // Recolor pixels
-
-    int level;
+    uint8_t level = 0;
+    uint8_t hit_flag = 0;
     while (1) {
-        level = run_game();
-        run_gun(level);
+        level = run_game(hit_flag);
+        hit_flag = run_gun(level);
         run_launcher(level);
     }
 }

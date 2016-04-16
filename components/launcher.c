@@ -27,8 +27,9 @@ void launch_launcher(void) {
 void level_launcher(void) {
     if (launcher.state != launcher.last_state) {  // if we are entering the state, do initialization stuff
         launcher.last_state =  launcher.state;
-        laucher.rol_limit = laucher.rol_limit - floor(launcher.level^1.5);
-        chaos_limit = chaos_limit - floor(launcher.level^1.5);
+        launcher.rol_limit = launcher.rol_limit - (uint8_t)(pow((double)launcher.level, 1.25));
+        launcher.chaos_limit = launcher.chaos_limit - (uint8_t)(pow((double)launcher.level, 1.25));
+
     }
 
     // Check for state transitions
@@ -50,9 +51,9 @@ void rest_launcher(void) {
     if (timer_flag(launcher.rol_timer)) {
         timer_lower(launcher.rol_timer);
         launcher.rol_ticks++;
-        chaos = rand()%100;
-        if (chaos > chaos_limit){
-            laucher.rol_ticks++;
+        uint8_t chaos = rand()%100;
+        if (chaos > launcher.chaos_limit){
+            launcher.rol_ticks++;
         }
         if(launcher.rol_ticks >= launcher.rol_limit){
             if (!pin_read(launcher.load_sensor)) {
@@ -70,7 +71,7 @@ void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *launch_motor, _
     pin_digitalIn(launch_sensor);
     pin_digitalOut(launch_motor);
 
-    laucher.rol_timer = rol_timer;
+    launcher.rol_timer = rol_timer;
     launcher.rol_limit = 100;
     launcher.rol_ticks = 0;
     timer_setPeriod(launcher.rol_timer, .01);
