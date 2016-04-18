@@ -33,6 +33,14 @@ void command_display(Display *disp, uint8_t cmd) {
     i2c_stop(disp->i2c);
 }
 
+void blink_display(Display *disp, uint8_t blink) {
+    if (blink){
+        command_display(disp, 0x87);
+    } else {
+        command_display(disp, 0x81);
+    }
+}
+
 void write_display(Display *disp, uint16_t value, uint8_t colon) {
     uint8_t addr = (disp->addr << 1) | 0;     // Write mode
     i2c_start(disp->i2c);

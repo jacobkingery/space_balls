@@ -9,6 +9,7 @@
 
 void init_gun(_LED *shoot_led, _PIN *camera, _PIN *l_trigger, _PIN *r_trigger, _TIMER *rof_timer);
 uint8_t run_gun(uint8_t level);
+void over_gun(void);
 void shoot_gun(void);
 void rest_gun(void);
 

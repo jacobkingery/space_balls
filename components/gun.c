@@ -42,8 +42,17 @@ void rest_gun(void) {
         }
     }
 
+    if (!gun.level){
+        gun.state = over_gun;
+    }
     /*if (state_gun != last_state_gun) {  // if we are leaving the state, do clean up stuff
       }*/
+}
+
+void over_gun(void) {
+    if (gun.level) {
+        gun.state = rest_gun;
+    }
 }
 
 void init_gun(_LED *shoot_led, _PIN *camera, _PIN *l_trigger, _PIN *r_trigger, _TIMER *rof_timer) {
@@ -56,7 +65,7 @@ void init_gun(_LED *shoot_led, _PIN *camera, _PIN *l_trigger, _PIN *r_trigger, _
     timer_setPeriod(gun.rof_timer, .2);
     timer_start(gun.rof_timer);
 
-    gun.state = rest_gun;
+    gun.state = over_gun;
     gun.last_state = (STATE_HANDLER_T)NULL;
 }
 

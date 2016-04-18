@@ -5,13 +5,14 @@
 #include "common.h"
 #include "pin.h"
 #include "ui.h"
+#include "oc.h"
 
 Launcher launcher;
 
 void launch_launcher(void) {
     if (launcher.state != launcher.last_state) {  // if we are entering the state, do initialization stuff
         launcher.last_state =  launcher.state;
-        pin_write(launcher.launch_motor, 1);
+        pin_set(launcher.launch_motor);
     }
 
     // Check for state transitions
@@ -20,7 +21,7 @@ void launch_launcher(void) {
     }
 
     if (launcher.state != launcher.last_state) {  // if we are leaving the state, do clean up stuff
-        pin_write(launcher.launch_motor, 0);
+        pin_clear(launcher.launch_motor);
     }
 }
 
@@ -62,14 +63,42 @@ void rest_launcher(void) {
         }
     }
 
+    if (!launcher.level){
+        launcher.state = over_launcher;
+    }
+
     /*if (state_launcher != last_state_launcher) {  // if we are leaving the state, do clean up stuff
       }*/
 }
 
-void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *launch_motor, _TIMER *rol_timer) {
+void over_launcher(void) {
+    if (launcher.state != launcher.last_state) {  // if we are entering the state, do intitialization stuff
+        launcher.last_state = launcher.state;
+
+        launcher.rol_limit = 100;
+        launcher.rol_ticks = 0;
+        timer_lower(launcher.rol_timer);
+        timer_stop(launcher.rol_timer);
+        pin_clear(launcher.elevator_motor);
+        pin_clear(launcher.sort_motor);
+    }
+
+    // Check for state transitions
+    if(launcher.level){
+        launcher.state = rest_launcher;
+    }
+    if (launcher.state != launcher.last_state) {  // if we are leaving the state, do clean up stuff
+        timer_start(launcher.rol_timer);
+        pin_set(launcher.elevator_motor);
+        pin_write(launcher.sort_motor, 0xffff);
+    }
+}
+
+void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *launch_motor, _PIN *elevator_motor, _PIN *sort_motor, _OC *sort_oc, _TIMER *rol_timer) {
     pin_digitalIn(load_sensor);
     pin_digitalIn(launch_sensor);
     pin_digitalOut(launch_motor);
+    pin_digitalOut(elevator_motor);
 
     launcher.rol_timer = rol_timer;
     launcher.rol_limit = 100;
@@ -80,8 +109,14 @@ void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *launch_motor, _
     launcher.load_sensor = load_sensor;
     launcher.launch_sensor = launch_sensor;
     launcher.launch_motor = launch_motor;
+    launcher.elevator_motor = elevator_motor;
+    launcher.sort_motor = sort_motor;
 
-    launcher.state = rest_launcher;
+    launcher.sort_oc = sort_oc;
+
+    oc_pwm(sort_oc, launcher.sort_motor, NULL, 10e3, 0x0);
+
+    launcher.state = over_launcher;
     launcher.last_state = (STATE_HANDLER_T)NULL;
 }
 
