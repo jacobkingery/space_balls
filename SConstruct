@@ -28,14 +28,18 @@ env.Program('space_balls', ['space_balls.c',
             './components/game.c',
             './components/gun.c',
             './components/launcher.c',
+            './components/shooter.c',
+            './components/baller.c',
             './components/display.c',
             './components/audio.c',
+            './components/pix.c',
             '../lib/usb.c',
             '../lib/i2c.c',
             '../lib/descriptors.c',
             '../lib/ui.c',
             '../lib/timer.c',
             '../lib/pin.c',
+            '../lib/oc.c',
             '../lib/common.c'])
 
 print('Creating builder to load hex file via bootloader...')

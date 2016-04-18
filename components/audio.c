@@ -34,7 +34,7 @@ void VendorRequestsOut(void) {
     }
 }
 
-void trigger_audio(Sound play){
+void trigger_audio(Sound play) {
     audio.play = play;
     pin_set(audio.request_pin);
 }
