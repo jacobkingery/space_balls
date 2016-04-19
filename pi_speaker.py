@@ -1,4 +1,5 @@
 import usb.core
+import time
 import RPi.GPIO as GPIO
 import pygame
 
@@ -35,6 +36,8 @@ class Speaker(object):
 def main():
     try:
         speaker = Speaker()
+        while True:
+            sleep(1);
     except:
         GPIO.cleanup()
 
