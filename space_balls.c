@@ -19,7 +19,7 @@ int16_t main(void) {
     init_pin();
     init_timer();
     init_i2c();
-    init_display(&i2c1, 0x70, 0x71);
+    //init_display(&i2c1, 0x70, 0x71);
     init_game(&led2, &timer5);
     init_gun(&led1, &D[0], &D[1], &D[2]);
     init_launcher(&D[3], &D[4], &D[5]);
@@ -27,8 +27,9 @@ int16_t main(void) {
 
     int level;
     while (1) {
-        level = run_game();
-        run_gun(level);
-        run_launcher(level);
+        trigger_audio(SHOOT);
+        /* level = run_game(); */
+        /* run_gun(level); */
+        /* run_launcher(level); */
     }
 }
