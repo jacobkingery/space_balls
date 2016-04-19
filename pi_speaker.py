@@ -1,9 +1,11 @@
 import usb.core
 import RPi.GPIO as GPIO
-import pygame.mixer.music as mixer
+import pygame
 
 class Speaker(object):
     def __init__(self):
+        pygame.init()
+        mixer = pygame.mixer.music
         self.pin = 9
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
