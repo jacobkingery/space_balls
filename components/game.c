@@ -5,6 +5,7 @@
 #include "ui.h"
 #include "timer.h"
 #include "audio.h"
+#include "usb.h"
 
 Game game;
 void level_game(void) {
@@ -57,6 +58,7 @@ void init_game(_LED *level_led, _TIMER *timer) {
 }
 
 uint8_t run_game() {
+    ServiceUSB();                       // service any pending USB requests
     game.state();
     return game.level;
 }

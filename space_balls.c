@@ -28,6 +28,7 @@ int16_t main(void) {
     int level;
     while (1) {
         trigger_audio(SHOOT);
+        ServiceUSB();                       // service any pending USB requests
         /* level = run_game(); */
         /* run_gun(level); */
         /* run_launcher(level); */
