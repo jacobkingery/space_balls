@@ -1,4 +1,5 @@
 import io
+import usb.core
 import time
 import picamera
 import picamera.array
@@ -45,6 +46,13 @@ class Camera(object):
                     stream.seek(0)
                     stream.truncate()
                     start = time.time()
+
+class Speaker(object):
+    def __init__(self):
+        self.pin = 9
+        GPIO.setup(self.pin, GPIO.IN)
+    def receive_sound(self):
+        sel
 
 def main():
     try:

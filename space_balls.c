@@ -11,6 +11,7 @@
 #include "game.h"
 #include "gun.h"
 #include "launcher.h"
+#include "audio.h"
 
 int16_t main(void) {
     init_clock();
@@ -18,6 +19,7 @@ int16_t main(void) {
     init_pin();
     init_timer();
     init_i2c();
+    init_audio();
     init_display(&i2c1, 0x70, 0x71);
     init_game(&led2, &timer5);
     init_gun(&led1, &D[0], &D[1], &D[2]);

@@ -4,6 +4,7 @@
 #include "pin.h"
 #include "ui.h"
 #include "timer.h"
+#include "audio.h"
 
 Game game;
 void level_game(void) {
