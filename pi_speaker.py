@@ -7,7 +7,7 @@ class Speaker(object):
     def __init__(self):
         pygame.init()
         mixer = pygame.mixer.music
-        self.pin = 9
+        self.pin = 10
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.pin, GPIO.IN)
@@ -40,7 +40,7 @@ def main():
     try:
         speaker = Speaker()
         while True:
-            sleep(1);
+            time.sleep(1);
     except:
         GPIO.cleanup()
 

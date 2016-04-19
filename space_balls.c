@@ -6,6 +6,7 @@
 #include "pin.h"
 #include "timer.h"
 #include "i2c.h"
+#include "usb.h"
 
 #include "display.h"
 #include "game.h"
@@ -19,10 +20,11 @@ int16_t main(void) {
     init_pin();
     init_timer();
     init_i2c();
+    InitUSB();                              // initialize the USB registers and serial interface engine
     //init_display(&i2c1, 0x70, 0x71);
-    init_game(&led2, &timer5);
-    init_gun(&led1, &D[0], &D[1], &D[2]);
-    init_launcher(&D[3], &D[4], &D[5]);
+    /* init_game(&led2, &timer5); */
+    /* init_gun(&led1, &D[0], &D[1], &D[2]); */
+    /* init_launcher(&D[3], &D[4], &D[5]); */
     init_audio(&D[6]);
 
     int level;
