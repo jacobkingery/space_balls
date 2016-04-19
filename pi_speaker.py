@@ -26,9 +26,12 @@ class Speaker(object):
 
     def receive_sound(self):
         try:
-            sound = self.dev.ctrl_transfer(0x40, self.SEND_AUDIO);
+            sound = self.dev.ctrl_transfer(0x40, self.SEND_AUDIO)
             if sound in self.sounds:
-                mixer.queue(self.sounds[sound]);
+                print("Playing:", self.sounds[sound])
+                mixer.queue(self.sounds[sound])
+            else:
+                print("Sound not Found")
         except:
             print("receiving falure")
 
