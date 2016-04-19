@@ -6,15 +6,26 @@
 #include "ui.h"
 #include "state.h"
 
-enum sound{start, shoot, hit, lose};
+typedef enum{
+    START,
+    SHOOT,
+    HIT,
+    LOSE
+} Sound;
+
+typedef enum{
+    SEND_SOUND
+} Request;
 
 void init_audio(_PIN *request_pin);
 void VendorRequests(void);
-void trigger_audio(sound play);
+void VendorRequestsIn(void);
+void VendorRequestsOut(void);
+void trigger_audio(Sound play);
 
 typedef struct {
     _PIN *request_pin;
-    sound play;
+    Sound play;
 } Audio;
 
 extern Audio audio;
