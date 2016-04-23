@@ -60,6 +60,7 @@ void rest_game(void) {
     }
 
     if (!game.life){
+        trigger_audio(LOSE);
         game.state = over_game;
     }
     if (game.state != game.last_state) {  // if we are leaving the state, do clean up stuff
@@ -95,6 +96,7 @@ void over_game(void) {
         timer_start(game.decay_timer);
         game.level = 1;
         game.score = 0;
+        trigger_audio(START);
     }
 }
 

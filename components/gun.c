@@ -16,9 +16,11 @@ void shoot_gun(void) {
     if (pin_read(gun.camera)){
         led_on(gun.shoot_led);
         gun.hit_flag = 1;
+        trigger_audio(HIT);
     } else {
         gun.hit_flag = 0;
         led_off(gun.shoot_led);
+        trigger_audio(SHOOT);
     }
 
     gun.state = rest_gun;
