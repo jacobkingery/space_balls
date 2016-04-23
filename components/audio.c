@@ -3,14 +3,16 @@
 #include "common.h"
 #include "pin.h"
 #include "usb.h"
+#include "ui.h"
 
 Audio audio;
 
 void VendorRequests(void) {
     switch (USB_setup.bRequest) {
         case SEND_SOUND:
-            BD[EP0IN].bytecount = 0;    // set EP0 IN byte count to 0
-            BD[EP0IN].status = audio.play;    // send packet as DATA1, set UOWN bit
+            BD[EP0IN].address[0] = audio.play; // set audio to play
+            BD[EP0IN].bytecount = 1;    // set EP0 IN byte count to 0
+            BD[EP0IN].status = 0xC8;    // send packet as DATA1, set UOWN bit
             pin_clear(audio.request_pin);
             break;
         default:
