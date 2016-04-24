@@ -1,0 +1,177 @@
+<h1>Spaceballs: the Penny Arcade Game</h1>
+
+<div id="game-design">
+    <!-- Description of game -->
+    <h3>THE GAME</h3>
+    <p>
+        This game is a first person space balls (asteroids) simulator. Use your laser turret to demolish the space balls coming at your ship before they demolish you! As time goes on, the balls become more and more hectic and you have less time to clear them before they finish off your ship. Do you have the space balls to survive?s
+    </p>
+
+    <p>
+        The asteroids are the property of father's brother's nephew's cousin's former roommate.  What's that make them to you? <br>
+        <strong>
+            Absolutely nothing! Which is what they are about to become!
+        </strong> <br>
+    </p>
+    <p>
+        Use your schwartz-powered turret to fire at the asteroids coming at your winnebago!  Your crew is doing repairs as you fly through this asteroid field, and they only need the ship to survive sufficiently long enough.  Shooting asteroids gives your crew more time to repair!
+
+        <div class="quote">
+            You have the ring, and I see your Schwartz is as big as mine. Now let's see how well you handle it.
+        </div>
+    </p>
+</div>
+
+<div id="component-software" class="component">
+    <h3>THE SOFTWARE</h3>
+    Different stateholding parts contain the game information
+    More information on the overall software design
+    <ol>
+        <li>Game State</li>
+        <li>Turret State</li>
+        <li>Neopixel State</li>
+        <li>Speaker State</li>
+        <li>7-segment display</li>
+    </ol>
+
+    <div id="software-game">
+        Game has levels.
+
+        Shooting asteroids increases your time remaining.
+
+        Each level launches balls faster and ticks down faster.
+
+        The final boss sends balls flying around at ludicrous speed!
+
+        <div id="game-losing">
+            It is quite possible to lose!
+            Losing conditions: run out of time (Missing a sufficent number of balls)
+
+            <div class="quote">
+                Say goodbye to your two best friends, and I don't mean your pals in the Winnebago.
+            </div>
+
+        </div>
+    </div>
+
+    <div id="software-turret">
+        The turret has a delay in its firing state.
+
+        When the trigger is detected, a shot is made.  Raspberry Pi determins if a hit is made by checking the brightness in the center area.
+        <pre>
+            ##### snippet #####
+        </pre>
+
+        If hit, tells game state to increase time remaining.  Depending on color, offers different power ups.
+    </div>
+
+    <div id="software-neopixel">
+        Neopixels show the remaining time in a level.
+
+        <pre>
+            ##### NEOPIXEL CODE SEGMENT #####
+        </pre>
+
+        State holder pix with many utility functions to write to it.
+
+        Sends neopixel signal using oc_pwm and interrupts to make it fast enough.
+        ##### snippet #####
+
+        Sends G1-R1-B1-G2-R2-B2-...-Gn-Rn-Bn theoretically, but weird bugs make it read in the following way:
+
+        R1-B1-G2-R2-B2-G3-R3-B3-...-Gn-Rn-G1.  This is accounted for in
+        SHIFT
+        <pre>
+            ##### snippet #####
+        </pre>
+    </div>
+
+    <div id="software-speaker">
+
+    </div>
+</div>
+
+<div id="component-mechanical">
+    <h3>THE MECHANICAL</h3>
+
+    <ol>
+        <li>Balls</li>
+        <li>Turret</li>
+        <li>Ball Launcher</li>
+        <li>Ball Loader</li>
+        <li>Ball Sorter</li>
+        <li>Case</li>
+    </ol>
+
+    <div id="mechanical-balls">
+        *explanation* <br>
+
+        CAD goes here <br>
+
+        PIC goes here
+
+    </div>
+
+    <div id="mechanical-turret">
+        *explanation* <br>
+
+        CAD goes here <br>
+
+        PIC goes here
+
+        <div class="quote">
+            Who made that man a gunner?
+        </div>
+    </div>
+
+    <div id="mechanical-ball-launcher">
+        *explanation* <br>
+
+        CAD goes here <br>
+
+        PIC goes here
+
+        <div class="quote">
+            We're gonna have to go right to ludicrous speed.
+        </div>
+    </div>
+
+    <div id="mechanical-ball-loader">
+        *explanation* <br>
+
+        CAD goes here <br>
+
+        PIC goes here
+    </div>
+
+    <div id="mechanical-ball-sorter">
+        *explanation* <br>
+
+        CAD goes here <br>
+
+        PIC goes here
+        
+    </div>
+
+
+    <div id="mechanical-ball-case">
+        *explanation* <br>
+
+        CAD goes here <br>
+
+        PIC goes here
+        
+    </div>
+</div>
+
+<div id="component-electrical">
+    <h3>THE ELECTRICAL</h3>
+    <ol>
+        <li>Turret Triggers</li>
+        <li>Raspberry Pi</li>
+        <li>Camera</li>
+        <li>Speakers</li>
+    </ol>
+
+
+</div>
