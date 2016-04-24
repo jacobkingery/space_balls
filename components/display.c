@@ -35,7 +35,7 @@ void command_display(Display *disp, uint8_t cmd) {
 
 void blink_display(Display *disp, uint8_t blink) {
     if (blink){
-        command_display(disp, 0x87);
+        command_display(disp, 0x83);
     } else {
         command_display(disp, 0x81);
     }

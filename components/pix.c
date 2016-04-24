@@ -78,7 +78,7 @@ void pix_write(uint8_t pixel, uint8_t red, uint8_t green, uint8_t blue) {
     //  64 > 0100 0000 > 0000 0100
 
     if(pixel == 0){
-        pix.data[0] = ((green & 128) ? 2 : 0) 
+        pix.data[0] = ((green & 128) ? 2 : 0)
                     + ((green &  64) ? 4 : 0);
     }
     else {
@@ -169,7 +169,7 @@ void color_shift_fourth(Color *dst, Color *src, int fourthshifts){
     color_shift_half(&mostly, src, fourthshifts / 2);
     dst->red   = mostly.red   * 0.8409;
     dst->green = mostly.green * 0.8409;
-    dst->blue  = mostly.blue  * 0.8409;    
+    dst->blue  = mostly.blue  * 0.8409;
 }
 
 // Approximately calculates a half bit shift.
@@ -195,7 +195,7 @@ void color_thresh_f(Color *dst, float red, float green, float blue){
     blue  = blue  < 255 ? blue  : 255;
     dst->red   = (uint8_t)red;
     dst->green = (uint8_t)green;
-    dst->blue  = (uint8_t)blue;    
+    dst->blue  = (uint8_t)blue;
 }
 
 void color_thresh_i(Color *dst, int red, int green, int blue){
@@ -244,13 +244,13 @@ void color_sub(Color *dst, Color *src1, Color *src2){
     int red   = src1->red   - src2->red;
     int green = src1->green - src2->green;
     int blue  = src1->blue  - src2->blue;
-    color_thresh_i(dst, red, green, blue);    
+    color_thresh_i(dst, red, green, blue);
 }
 
 // Luminosity calculated from http://www.johndcook.com/blog/2009/08/24/algorithms-convert-color-grayscale/
 void color_gray(Color *dst, Color *src){
-    float luminosity = 
-        0.21 * src->red   + 
+    float luminosity =
+        0.21 * src->red   +
         0.72 * src->green +
         0.07 * src->blue;
     color_thresh_f(dst, luminosity, luminosity, luminosity);

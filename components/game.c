@@ -10,14 +10,21 @@
 #include "audio.h"
 #include "pix.h"
 
+#define MAX_DECAY 100
+#define MAX_LIFE  100
+#define MAX_LEVEL 100
+
 Game game;
 void level_game(void) {
     if (game.state != game.last_state) {  // if we are entering the state_game, do initialization stuff
         game.last_state = game.state;
         game.level++;
-        game.life = 15;
-        game.decay_limit = 50 - floor(pow((double)game.level, 1.25));
+        game.life = MAX_LIFE;
+        game.decay_limit = MAX_DECAY - floor(pow((double)game.level, 2));
+        game.decay_ticks = 0;
+        game.level_ticks = 0;
         led_toggle(game.level_led);
+        write_display(game.level_display, game.level, 0);
     }
 
     // Check for state transitions
@@ -36,6 +43,8 @@ void rest_game(void) {
     }
 
     //run state logic
+    float life_percent = (float)game.life/100.0+(float)game.decay_ticks/game.decay_limit;
+    pix_fill_frac_c(life_percent, &RED, NULL);
 
     // Check for state transitions
     if (timer_flag(game.decay_timer)) {
@@ -44,9 +53,8 @@ void rest_game(void) {
         if(game.decay_ticks == game.decay_limit){
             game.life--;
             game.decay_ticks = 0;
+            write_display(game.level_display, game.life, 0);
         }
-        float life_percent = (float)game.life/100.0+(float)game.decay_ticks/game.decay_limit;
-        pix_fill_frac_c(life_percent, &RED, NULL);
     }
 
     if (timer_flag(game.level_timer)) {
@@ -58,7 +66,11 @@ void rest_game(void) {
     }
 
     if (game.hit_flag){
-        game.score += 100;
+        game.score += 25;
+        game.life += 10;
+        if (game.life > MAX_LIFE){
+            game.life = MAX_LIFE;
+        }
         write_display(game.score_display, game.score, 0);
     }
 
@@ -75,15 +87,16 @@ void over_game(void) {
         game.last_state = game.state;
 
         game.level_ticks = 0;
-        game.level_limit = 100;
+        game.level_limit = MAX_LEVEL;
         game.level = 0;
 
         game.decay_ticks = 0;
-        game.decay_limit = 50;
-        game.life = 100;
+        game.decay_limit = MAX_DECAY;
+        game.life = MAX_LIFE;
         pix_fill_frac_c(0, &RED, NULL);
         write_display(game.score_display, game.score, 0);
-        /* blink_display(game.score_display, 1); */
+        write_display(game.level_display, game.level, 0);
+        blink_display(game.score_display, 1);
         timer_lower(game.level_timer);
         timer_lower(game.decay_timer);
         timer_stop(game.level_timer);
@@ -95,6 +108,8 @@ void over_game(void) {
 
     //run state logic
     if (pin_read(game.coin_op)) {
+        led_off(&led1);
+        led_off(&led3);
         game.state = rest_game;
     }
 
@@ -102,7 +117,8 @@ void over_game(void) {
         led_off(&led1);
         led_off(&led2);
         led_off(&led3);
-        /* blink_display(game.score_display, 0); */
+        blink_display(game.score_display, 0);
+        write_display(game.level_display, game.level, 0);
         timer_start(game.level_timer);
         timer_start(game.decay_timer);
         game.level = 1;
@@ -111,7 +127,7 @@ void over_game(void) {
     }
 }
 
-void init_game(_LED *level_led, _TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display *score_display) {
+void init_game(_LED *level_led, _TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display *score_display, Display *level_display) {
     game.level_led = level_led;
 
     game.hit_flag = 0;
@@ -121,19 +137,20 @@ void init_game(_LED *level_led, _TIMER *level_timer, _TIMER *decay_timer, _PIN *
 
     game.level_timer = level_timer;
     game.level_ticks = 0;
-    game.level_limit = 100;
+    game.level_limit = MAX_LEVEL;
     game.level = 0;
     timer_setPeriod(game.level_timer, .1);
     timer_start(game.level_timer);
 
     game.decay_timer = decay_timer;
     game.decay_ticks = 0;
-    game.decay_limit = 50;
-    game.life = 30;
-    timer_setPeriod(game.decay_timer, .1);
+    game.decay_limit = MAX_DECAY;
+    game.life = 0;
+    timer_setPeriod(game.decay_timer, .001);
     timer_start(game.decay_timer);
 
     game.score_display = score_display;
+    game.level_display = level_display;
     game.state = over_game;
     game.last_state = (STATE_HANDLER_T)NULL;
 }

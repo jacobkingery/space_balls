@@ -28,11 +28,11 @@ int16_t main(void) {
     led_on(&led1);
     init_display(&i2c3, 0x70, 0x71);
     led_on(&led2);
-    init_game(&led2, &timer1, &timer2, &D[0], &disp1);
+    init_game(&led2, &timer1, &timer2, &D[0], &disp1, &disp2);
     init_gun(&led1, &D[1], &D[2], &D[3], &timer3);
-    init_launcher(&D[4], &D[5], &D[6], &D[8], &D[9], &oc2, &timer4);
-    init_audio(&D[10]);
-    init_pix(&D[11], &timer5, 30, 0.05);
+    init_launcher(&D[4], &D[5], &D[6], &D[7], &D[8], &oc2, &timer4);
+    init_pix(&D[9], &timer5, 30, 0.05);
+    init_audio(&D[13]);
 
 
     uint8_t level = 0;

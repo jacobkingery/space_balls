@@ -88,6 +88,7 @@ void over_launcher(void) {
         launcher.state = rest_launcher;
     }
     if (launcher.state != launcher.last_state) {  // if we are leaving the state, do clean up stuff
+        led_on(&led1);
         timer_start(launcher.rol_timer);
         pin_set(launcher.elevator_motor);
         pin_write(launcher.sort_motor, 0xffff);
@@ -121,10 +122,10 @@ void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *launch_motor, _
 }
 
 void run_launcher(uint8_t level) {
+    launcher.level = level;
+    launcher.state();
     if (launcher.level != level){
         launcher.last_state = launcher.state;
         launcher.state = level_launcher;
     }
-    launcher.level = level;
-    launcher.state();
 }
