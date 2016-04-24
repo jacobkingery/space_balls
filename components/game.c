@@ -1,13 +1,14 @@
 #include <p24FJ128GB206.h>
 #include <math.h>
-#include "game.h"
-#include "display.h"
+#include "usb.h"
 #include "common.h"
 #include "pin.h"
 #include "ui.h"
 #include "timer.h"
+#include "game.h"
+#include "display.h"
 #include "audio.h"
-#include "usb.h"
+#include "pix.h"
 
 Game game;
 void level_game(void) {
@@ -44,6 +45,8 @@ void rest_game(void) {
             game.life--;
             game.decay_ticks = 0;
         }
+        float life_percent = (float)game.life/100.0+(float)game.decay_ticks/game.decay_limit;
+        pix_fill_frac_c(life_percent, &RED, NULL);
     }
 
     if (timer_flag(game.level_timer)) {
@@ -77,12 +80,17 @@ void over_game(void) {
 
         game.decay_ticks = 0;
         game.decay_limit = 50;
-        game.life = 30;
-        blink_display(game.score_display, 1);
+        game.life = 100;
+        pix_fill_frac_c(0, &RED, NULL);
+        write_display(game.score_display, game.score, 0);
+        /* blink_display(game.score_display, 1); */
         timer_lower(game.level_timer);
         timer_lower(game.decay_timer);
         timer_stop(game.level_timer);
         timer_stop(game.decay_timer);
+        led_on(&led1);
+        led_on(&led2);
+        led_on(&led3);
     }
 
     //run state logic
@@ -91,7 +99,10 @@ void over_game(void) {
     }
 
     if (game.state != game.last_state) {  // if we are leaving the state, do clean up stuff
-        blink_display(game.score_display, 0);
+        led_off(&led1);
+        led_off(&led2);
+        led_off(&led3);
+        /* blink_display(game.score_display, 0); */
         timer_start(game.level_timer);
         timer_start(game.decay_timer);
         game.level = 1;

@@ -4,6 +4,7 @@
 #include "pin.h"
 #include "timer.h"
 #include "ui.h"
+#include "audio.h"
 
 Gun gun;
 

@@ -62,7 +62,7 @@ void write_display(Display *disp, uint16_t value, uint8_t colon) {
 }
 
 void init_display(_I2C *i2c, uint8_t addr1, uint8_t addr2) {
-    i2c_open(i2c, 4e5);
+    i2c_open(i2c, 3e5);
     disp1.i2c = i2c;
     disp2.i2c = i2c;
     disp1.addr = addr1;

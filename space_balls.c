@@ -25,16 +25,19 @@ int16_t main(void) {
     InitUSB();                              // initialize the USB registers and serial interface engine
     init_oc();
 
-    init_display(&i2c1, 0x70, 0x71);
+    led_on(&led1);
+    init_display(&i2c3, 0x70, 0x71);
+    led_on(&led2);
     init_game(&led2, &timer1, &timer2, &D[0], &disp1);
     init_gun(&led1, &D[1], &D[2], &D[3], &timer3);
     init_launcher(&D[4], &D[5], &D[6], &D[8], &D[9], &oc2, &timer4);
     init_audio(&D[10]);
+    init_pix(&D[11], &timer5, 30, 0.05);
 
-    init_pix(&D[13], &timer4, 30, 0.05);
 
     uint8_t level = 0;
     uint8_t hit_flag = 0;
+    led_on(&led3);
     while (1) {
         level = run_game(hit_flag);
         hit_flag = run_gun(level);
