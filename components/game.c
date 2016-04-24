@@ -44,7 +44,9 @@ void rest_game(void) {
 
     //run state logic
     float life_percent = (float)game.life/100.0+(float)game.decay_ticks/game.decay_limit;
-    pix_fill_frac_c(life_percent, &RED, NULL);
+    Color fuckThisShit;
+    color_mix(&fuckThisShit, &RED, &GREEN, life_percent);
+    pix_fill_frac_c(life_percent, &fuckThisShit, NULL);
 
     // Check for state transitions
     if (timer_flag(game.decay_timer)) {
