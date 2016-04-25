@@ -23,23 +23,9 @@ void launch_launcher(void) {
     if (launcher.state != launcher.last_state) {  // if we are leaving the state, do clean up stuff
         pin_clear(launcher.launch_motor);
     }
-}
 
-void level_launcher(void) {
-    if (launcher.state != launcher.last_state) {  // if we are entering the state, do initialization stuff
-        launcher.last_state =  launcher.state;
-        launcher.rol_limit = launcher.rol_limit - (uint8_t)(pow((double)launcher.level, 1.25));
-        launcher.chaos_limit = launcher.chaos_limit - (uint8_t)(pow((double)launcher.level, 1.25));
-
-    }
-
-    // Check for state transitions
-    if (!pin_read(launcher.launch_sensor)) {
-        launcher.state = rest_launcher;
-    }
-
-    if (launcher.state != launcher.last_state) {  // if we are leaving the state, do clean up stuff
-        pin_write(launcher.launch_motor, 0);
+    if (!launcher.level){
+        launcher.state = over_launcher;
     }
 }
 
@@ -80,7 +66,8 @@ void over_launcher(void) {
         timer_lower(launcher.rol_timer);
         timer_stop(launcher.rol_timer);
         pin_clear(launcher.elevator_motor);
-        pin_clear(launcher.sort_motor);
+        pin_write(launcher.sort_motor, 0);
+        led_on(&led1);
     }
 
     // Check for state transitions
@@ -88,7 +75,7 @@ void over_launcher(void) {
         launcher.state = rest_launcher;
     }
     if (launcher.state != launcher.last_state) {  // if we are leaving the state, do clean up stuff
-        led_on(&led1);
+        led_off(&led1);
         timer_start(launcher.rol_timer);
         pin_set(launcher.elevator_motor);
         pin_write(launcher.sort_motor, 0xffff);
@@ -122,10 +109,10 @@ void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *launch_motor, _
 }
 
 void run_launcher(uint8_t level) {
-    launcher.level = level;
     launcher.state();
     if (launcher.level != level){
-        launcher.last_state = launcher.state;
-        launcher.state = level_launcher;
+        launcher.level = level;
+        launcher.rol_limit = launcher.rol_limit - (uint8_t)(pow((double)launcher.level, 1.25));
+        launcher.chaos_limit = launcher.chaos_limit - (uint8_t)(pow((double)launcher.level, 1.25));
     }
 }

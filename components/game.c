@@ -15,25 +15,20 @@
 #define MAX_LEVEL 100
 
 Game game;
+float life_percent;
+Color cmap;
+
 void level_game(void) {
     if (game.state != game.last_state) {  // if we are entering the state_game, do initialization stuff
         game.last_state = game.state;
         game.level++;
-        game.life = MAX_LIFE;
-        game.decay_limit = MAX_DECAY - floor(pow((double)game.level, 2));
         game.decay_ticks = 0;
         game.level_ticks = 0;
-        led_toggle(game.level_led);
+        game.decay_limit = MAX_DECAY - floor(pow((double)game.level, 2));
         write_display(game.level_display, game.level, 0);
     }
 
-    // Check for state transitions
-    if (1) {
-        game.state = rest_game;
-    }
-
-    /* if (game.state != game.last_state) {  // if we are leaving the state, do clean up stuff */
-    /* } */
+    game.state = rest_game;
 }
 
 void rest_game(void) {
@@ -43,10 +38,9 @@ void rest_game(void) {
     }
 
     //run state logic
-    float life_percent = (float)game.life/100.0+(float)game.decay_ticks/game.decay_limit;
-    Color fuckThisShit;
-    color_mix(&fuckThisShit, &RED, &GREEN, life_percent);
-    pix_fill_frac_c(life_percent, &fuckThisShit, NULL);
+    life_percent = (float)game.life/MAX_LIFE-((float)game.decay_ticks/game.decay_limit)/100.0;
+    color_mix(&cmap, &GREEN, &RED, life_percent);
+    pix_fill_frac_c(life_percent, &cmap, NULL);
 
     // Check for state transitions
     if (timer_flag(game.decay_timer)) {
@@ -55,7 +49,6 @@ void rest_game(void) {
         if(game.decay_ticks == game.decay_limit){
             game.life--;
             game.decay_ticks = 0;
-            write_display(game.level_display, game.life, 0);
         }
     }
 
@@ -80,8 +73,6 @@ void rest_game(void) {
         trigger_audio(LOSE);
         game.state = over_game;
     }
-    if (game.state != game.last_state) {  // if we are leaving the state, do clean up stuff
-    }
 }
 
 void over_game(void) {
@@ -103,22 +94,16 @@ void over_game(void) {
         timer_lower(game.decay_timer);
         timer_stop(game.level_timer);
         timer_stop(game.decay_timer);
-        led_on(&led1);
-        led_on(&led2);
-        led_on(&led3);
+        led_off(&led3);
     }
 
     //run state logic
     if (pin_read(game.coin_op)) {
-        led_off(&led1);
-        led_off(&led3);
         game.state = rest_game;
     }
 
     if (game.state != game.last_state) {  // if we are leaving the state, do clean up stuff
-        led_off(&led1);
-        led_off(&led2);
-        led_off(&led3);
+        led_on(&led3);
         blink_display(game.score_display, 0);
         write_display(game.level_display, game.level, 0);
         timer_start(game.level_timer);
@@ -129,8 +114,7 @@ void over_game(void) {
     }
 }
 
-void init_game(_LED *level_led, _TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display *score_display, Display *level_display) {
-    game.level_led = level_led;
+void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display *score_display, Display *level_display) {
 
     game.hit_flag = 0;
     game.score = 0;

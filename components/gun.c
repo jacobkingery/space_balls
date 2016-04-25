@@ -15,22 +15,14 @@ void shoot_gun(void) {
 
     // Perform state tasks
     if (pin_read(gun.camera)||!sw_read(&sw2)){
-        led_on(gun.shoot_led);
         gun.hit_flag = 1;
         trigger_audio(HIT);
-        led_on(&led3);
     } else {
         gun.hit_flag = 0;
-        led_off(gun.shoot_led);
         trigger_audio(SHOOT);
-        led_off(&led3);
     }
 
     gun.state = rest_gun;
-
-    if (gun.state != gun.last_state) {  // if we are leaving the state, do clean up stuff
-        led_off(gun.shoot_led);
-    }
 }
 
 void rest_gun(void) {
@@ -60,8 +52,7 @@ void over_gun(void) {
     }
 }
 
-void init_gun(_LED *shoot_led, _PIN *camera, _PIN *l_trigger, _PIN *r_trigger, _TIMER *rof_timer) {
-    gun.shoot_led = shoot_led;
+void init_gun(_PIN *camera, _PIN *l_trigger, _PIN *r_trigger, _TIMER *rof_timer) {
     gun.camera = camera;
     gun.l_trigger = l_trigger;
     gun.r_trigger = r_trigger;

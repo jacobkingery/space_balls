@@ -7,7 +7,7 @@
 #include "timer.h"
 #include "state.h"
 
-void init_game(_LED *level_led, _TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display *score_display, Display *level_display);
+void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display *score_display, Display *level_display);
 uint8_t run_game(uint8_t hit_flag);
 void over_game();
 void rest_game(void);
@@ -15,7 +15,6 @@ void level_game(void);
 void game_over(void);
 
 typedef struct {
-    _LED *level_led;
     _PIN *coin_op;
     Display *score_display;
     Display *level_display;
