@@ -18,6 +18,9 @@ Game game;
 float life_percent;
 Color cmap;
 
+Color start_color = {0, 50,0};
+Color end_color = {255, 0, 0};
+
 void level_game(void) {
     if (game.state != game.last_state) {  // if we are entering the state_game, do initialization stuff
         game.last_state = game.state;
@@ -39,7 +42,7 @@ void rest_game(void) {
 
     //run state logic
     life_percent = (float)game.life/MAX_LIFE-((float)game.decay_ticks/game.decay_limit)/100.0;
-    color_mix(&cmap, &GREEN, &RED, life_percent);
+    color_mix(&cmap, &start_color, &end_color, life_percent);
     pix_fill_frac_c(life_percent, &cmap, NULL);
 
     // Check for state transitions
@@ -104,12 +107,13 @@ void over_game(void) {
 
     if (game.state != game.last_state) {  // if we are leaving the state, do clean up stuff
         led_on(&led3);
-        blink_display(game.score_display, 0);
-        write_display(game.level_display, game.level, 0);
-        timer_start(game.level_timer);
-        timer_start(game.decay_timer);
         game.level = 1;
         game.score = 0;
+        blink_display(game.score_display, 0);
+        write_display(game.level_display, game.level, 0);
+        write_display(game.score_display, game.score, 0);
+        timer_start(game.level_timer);
+        timer_start(game.decay_timer);
         trigger_audio(START);
     }
 }
@@ -125,7 +129,7 @@ void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display 
     game.level_ticks = 0;
     game.level_limit = MAX_LEVEL;
     game.level = 0;
-    timer_setPeriod(game.level_timer, .1);
+    timer_setPeriod(game.level_timer, .2);
     timer_start(game.level_timer);
 
     game.decay_timer = decay_timer;

@@ -7,7 +7,7 @@
 #include "timer.h"
 #include "state.h"
 
-void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *launch_motor, _PIN *elevator_motor, _PIN *sort_motor, _OC *sort_oc, _TIMER *rol_timer);
+void init_launcher(_PIN *load_sensor, _PIN *launch_sensor, _PIN *launch_motor, _PIN shoot_motor1, _PIN shoot_motor2, _PIN *elevator_motor, _PIN *sort_motor, _OC *sort_oc, _TIMER *rol_timer);
 void run_launcher(uint8_t level);
 void over_launcher(void);
 void rest_launcher(void);
@@ -16,6 +16,8 @@ typedef struct {
     _PIN *load_sensor;
     _PIN *launch_sensor;
     _PIN *launch_motor;
+    _PIN *shoot_motor1;
+    _PIN *shoot_motor1;
     _PIN *elevator_motor;
     _PIN *sort_motor;
     _OC *sort_oc;
