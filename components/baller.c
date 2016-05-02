@@ -95,6 +95,9 @@ void init_baller(_PIN *sort_motor, _OC *sort_oc, _TIMER *rol_timer, Shooter *sho
     //initialize random number generator
     srand(0);
 
+    baller.shooter = shooter;
+    baller.launcher = launcher;
+
     baller.level = 0;
     baller.state = over_baller;
     baller.last_state = (STATE_HANDLER_T)NULL;
