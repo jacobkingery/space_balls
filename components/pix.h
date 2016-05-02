@@ -48,6 +48,7 @@ void pix_fill_range_c(uint8_t start, uint8_t stop, Color *color);
 
 void pix_fill_frac(float frac, uint8_t red, uint8_t green, uint8_t blue);
 void pix_fill_frac_c(float frac, Color *fill_color, Color *empty_color);
+void update_bar_pix(float frac, Color *fill_color, Color *empty_color);
 
 void __test_pixels_1(_TIMER *timer);
 void __test_pixels_2(_TIMER *timer);

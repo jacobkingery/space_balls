@@ -28,6 +28,7 @@ typedef struct {
     uint8_t life;
     uint16_t score;
     uint8_t hit_flag;
+    uint8_t coin_flag;
     STATE_HANDLER_T state;
     STATE_HANDLER_T last_state;
 } Game;

@@ -29,17 +29,21 @@ int16_t main(void) {
 
     init_display(&i2c3, 0x70, 0x71);
     init_game(&timer1, &timer2, &D[0], &disp1, &disp2);
-    init_gun(&D[1], &D[2], &D[3], &timer3);
-    init_shooter(&D[4], &D[5], &D[6], &D[7], &D[8], &D[9]);
-    init_launcher(&D[10], &D[11], &D[12], &A[0]);
-    init_baller(&A[1], &oc2, &timer4, &shooter, &launcher);
-    init_pix(&A[2], &timer5, 30, 0.05);
+    init_gun(&D[12], &A[0], &A[1], &timer3);
+    init_launcher(&D[11], &D[9], &D[1], &D[0]);
+    init_shooter(&D[10], &D[8], &D[3], &D[2], &D[4], &D[5], &oc3, &oc4);
+    init_baller(&D[6], &oc2, &timer4, &shooter, &launcher);
+    init_pix(&D[7], &timer5, 30, 0.05);
     init_audio(&D[13]);
-
 
     uint8_t level = 0;
     uint8_t hit_flag = 0;
+    uint32_t i = 0;
     while (1) {
+        if (i%10000){
+            led_toggle(&led2);
+        }
+        i++;
         level = run_game(hit_flag);
         hit_flag = run_gun(level);
         run_baller(level);

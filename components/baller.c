@@ -11,6 +11,10 @@
 
 Baller baller;
 
+#define E 2.71
+#define ROL_LIMIT_MAX 100
+#define CHAOS_LIMIT_MAX 100
+
 void rest_baller(void) {
     if (baller.state != baller.last_state) {  // if we are entering the state, do intitialization stuff
         baller.last_state = baller.state;
@@ -26,9 +30,17 @@ void rest_baller(void) {
         }
         if(baller.rol_ticks >= baller.rol_limit){
             if(rand()%2){
-                baller.shooter->shoot = 1;
+                if(!baller.shooter->shoot){
+                    baller.shooter->shoot = 1;
+                } else {
+                    baller.launcher->launch = 1;
+                }
             } else {
-                baller.launcher->launch = 1;
+                if(!baller.launcher->launch){
+                    baller.launcher->launch = 1;
+                } else {
+                    baller.shooter->shoot = 1;
+                }
             }
         }
     }
@@ -52,17 +64,18 @@ void over_baller(void) {
         pin_write(baller.sort_motor, 0);
         baller.launcher->over = 1;
         baller.shooter->over = 1;
-        led_on(&led1);
+        baller.level = 0;
     }
 
     // Check for state transitions
     if(baller.level){
         baller.state = rest_baller;
     }
+
     if (baller.state != baller.last_state) {  // if we are leaving the state, do clean up stuff
-        led_off(&led1);
         timer_start(baller.rol_timer);
         pin_write(baller.sort_motor, 0xaaaa);
+        led_on(&led3);
         baller.launcher->over = 0;
         baller.shooter->over = 0;
     }
@@ -82,6 +95,7 @@ void init_baller(_PIN *sort_motor, _OC *sort_oc, _TIMER *rol_timer, Shooter *sho
     //initialize random number generator
     srand(0);
 
+    baller.level = 1;
     baller.state = over_baller;
     baller.last_state = (STATE_HANDLER_T)NULL;
 }
@@ -92,8 +106,10 @@ void run_baller(uint8_t level) {
     baller.shooter->state();
 
     if (baller.level != level){
+        led_on(&led2);
         baller.level = level;
-        baller.rol_limit = baller.rol_limit - (uint8_t)(pow((double)baller.level, 1.25));
-        baller.chaos_limit = baller.chaos_limit - (uint8_t)(pow((double)baller.level, 1.25));
+        baller.shooter->level = level;
+        baller.rol_limit = ROL_LIMIT_MAX - (.9*ROL_LIMIT_MAX/(1.0+pow(E, -baller.level+5)));
+        baller.chaos_limit = .9*CHAOS_LIMIT_MAX/(1.0+pow(E, -baller.level+5));
     }
 }

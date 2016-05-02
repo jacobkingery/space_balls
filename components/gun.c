@@ -30,10 +30,9 @@ void rest_gun(void) {
         gun.last_state = gun.state;
         gun.hit_flag = 0;
     }
-
     // Check for state transitions
     if (timer_flag(gun.rof_timer)){
-        if ((pin_read(gun.l_trigger) && pin_read(gun.r_trigger))||!sw_read(&sw2)||!sw_read(&sw3)) {
+        if ((pin_read(gun.l_trigger) || pin_read(gun.r_trigger))||!sw_read(&sw2)||!sw_read(&sw3)) {
             timer_lower(gun.rof_timer);
             gun.state = shoot_gun;
         }
@@ -47,6 +46,11 @@ void rest_gun(void) {
 }
 
 void over_gun(void) {
+    if ((pin_read(gun.l_trigger) || pin_read(gun.r_trigger))){
+        gun.hit_flag = 1;
+    } else {
+        gun.hit_flag = 0;
+    }
     if (gun.level) {
         gun.state = rest_gun;
     }

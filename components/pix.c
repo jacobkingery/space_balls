@@ -159,6 +159,11 @@ void pix_fill_frac_c(float frac, Color *fill_color, Color *empty_color){
     pix.is_dirty = 1;
 }
 
+void update_bar_pix(float frac, Color *fill_color, Color *empty_color){
+    color_mix(&__fill, fill_color, empty_color, frac);
+    pix_fill_frac_c(frac, &__fill, NULL);
+}
+
 // Approximately caclulates a quarter bit shift
 void color_shift_fourth(Color *dst, Color *src, int fourthshifts){
     if(fourthshifts % 2 == 0){

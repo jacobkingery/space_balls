@@ -19,6 +19,7 @@ typedef struct {
     _PIN *elevator_motor;
     uint8_t over;
     uint8_t launch;
+    uint8_t loaded;
     STATE_HANDLER_T state;
     STATE_HANDLER_T last_state;
 } Launcher;
