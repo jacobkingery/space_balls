@@ -66,13 +66,6 @@ void over_launcher(void) {
     if (launcher.state != launcher.last_state) {  // if we are entering the state, do intitialization stuff
         launcher.last_state = launcher.state;
         pin_clear(launcher.elevator_motor);
-        if (pin_read(launcher.launch_sensor)) {
-            pin_set(launcher.launch_motor);
-        }
-    }
-
-    if (!pin_read(launcher.launch_sensor)){
-        pin_clear(launcher.launch_motor);
     }
 
     // Check for state transitions

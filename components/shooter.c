@@ -16,6 +16,8 @@ uint16_t speed_range = .75 * MAX_SPEED /(1.0 + pow(E,5.0));
 uint16_t top_speed = 0;
 uint16_t back_speed = 0;
 
+uint16_t elevator_counter = 0;
+uint16_t push_counter = 0;
 void shoot_shooter(void) {
     if (shooter.state != shooter.last_state) {  // if we are entering the state, do initialization stuff
         shooter.last_state =  shooter.state;
@@ -26,16 +28,22 @@ void shoot_shooter(void) {
         back_speed = MAX_SPEED - (rand()%speed_range);
     }
 
-    if(!shooter.load_sensor){
+    if (!pin_read(shooter.load_sensor)){
+        elevator_counter++;
+    }
+
+    if (elevator_counter > 3000){
         shooter.loaded = 1;
         pin_clear(shooter.elevator_motor);
+        led_on(&led2);
     }
 
     if(shooter.loaded){
+        push_counter++;
         pin_set(shooter.push_motor);
         pin_write(shooter.top_spin_motor, top_speed);
         pin_write(shooter.back_spin_motor, back_speed);
-        if (!pin_read(shooter.push_sensor)) {
+        if (!pin_read(shooter.push_sensor) && push_counter >=1000) {
             shooter.state = rest_shooter;
         }
     }
@@ -49,6 +57,8 @@ void shoot_shooter(void) {
         pin_set(shooter.elevator_motor);
         shooter.shoot = 0;
         shooter.loaded = 0;
+        elevator_counter = 0;
+        push_counter = 0;
     }
 }
 
@@ -57,11 +67,15 @@ void rest_shooter(void) {
         shooter.last_state = shooter.state;
     }
 
-    if(!shooter.load_sensor){
-        shooter.loaded = 1;
-        pin_clear(shooter.elevator_motor);
+    if (!pin_read(shooter.load_sensor)){
+        elevator_counter++;
     }
 
+    if (elevator_counter > 3000){
+        shooter.loaded = 1;
+        pin_clear(shooter.elevator_motor);
+        led_on(&led2);
+    }
     if (shooter.over){
         shooter.state = over_shooter;
     }
@@ -80,14 +94,8 @@ void over_shooter(void) {
         pin_write(shooter.top_spin_motor, 0);
         pin_write(shooter.back_spin_motor, 0);
         shooter.level = 0;
-        if (pin_read(shooter.push_sensor)) {
-            pin_set(shooter.push_motor);
-        }
     }
 
-    if (!pin_read(shooter.push_sensor)){
-        pin_clear(shooter.push_motor);
-    }
     // Check for state transitions
     if(!shooter.over){
         shooter.state = rest_shooter;
