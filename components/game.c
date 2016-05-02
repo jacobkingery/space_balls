@@ -31,8 +31,7 @@ void level_game(void) {
         game.decay_limit = MAX_DECAY - (.9*MAX_DECAY/(1.0+pow(E, -game.level+5)));
         write_display(game.level_display, game.level, 0);
     }
-
-    game.state = rest_game;
+game.state = rest_game;
 }
 
 void rest_game(void) {
@@ -42,12 +41,10 @@ void rest_game(void) {
     }
     led_on(&led3);
 
-    /* write_display(game.score_display, game.life, 0); */
     //run state logic
     life_percent = (float)game.life/MAX_LIFE-((float)game.decay_ticks/game.decay_limit)/100.0;
-    /* update_bar_pix(life_percent, &start_color, &end_color); */
+    update_bar_pix(life_percent, &start_color, &end_color);
 
-    // Check for state transitions
     if (timer_flag(game.decay_timer)) {
         timer_lower(game.decay_timer);
         game.decay_ticks++;
@@ -74,6 +71,7 @@ void rest_game(void) {
         /* write_display(game.score_display, game.score, 0); */
     }
 
+    // Check for state transitions
     if (!game.life){
         trigger_audio(LOSE);
         game.state = over_game;
@@ -90,15 +88,14 @@ void over_game(void) {
 
         game.decay_ticks = 0;
         game.decay_limit = MAX_DECAY;
-        //        led_on(&led1);
-        //pix_fill_frac_c(0, &RED, NULL);
-        write_display(game.score_display, 0, 0);
+
         write_display(game.level_display, game.level, 0);
         blink_display(game.score_display, 1);
         timer_lower(game.level_timer);
         timer_lower(game.decay_timer);
         timer_stop(game.level_timer);
         timer_stop(game.decay_timer);
+        update_bar_pix(0, &start_color, &end_color);
     }
 
     //run state logic
@@ -122,7 +119,6 @@ void over_game(void) {
         game.coin_flag = 0;
         blink_display(game.score_display, 0);
         write_display(game.level_display, game.level, 0);
-        write_display(game.score_display, game.life, 0);
         timer_start(game.level_timer);
         timer_start(game.decay_timer);
         trigger_audio(START);
@@ -148,7 +144,7 @@ void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display 
     game.decay_ticks = 0;
     game.decay_limit = MAX_DECAY;
     game.life = MAX_LIFE;
-    timer_setPeriod(game.decay_timer, 0.001);
+    timer_setPeriod(game.decay_timer, 0.002);
     timer_start(game.decay_timer);
 
     game.score_display = score_display;

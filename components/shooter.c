@@ -98,8 +98,8 @@ void over_shooter(void) {
 
     if (shooter.state != shooter.last_state) {  // if we are leaving the state, do clean up stuff
         pin_set(shooter.elevator_motor);
-        pin_write(shooter.top_spin_motor, MAX_SPEED);
-        pin_write(shooter.back_spin_motor, MAX_SPEED);
+        pin_write(shooter.top_spin_motor, MAX_SPEED*.75);
+        pin_write(shooter.back_spin_motor, MAX_SPEED*.75);
         led_off(&led2);
     }
 }
