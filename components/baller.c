@@ -75,7 +75,6 @@ void over_baller(void) {
     if (baller.state != baller.last_state) {  // if we are leaving the state, do clean up stuff
         timer_start(baller.rol_timer);
         pin_write(baller.sort_motor, 0xcccc);
-        led_on(&led3);
         baller.launcher->over = 0;
         baller.shooter->over = 0;
     }

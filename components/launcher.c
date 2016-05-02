@@ -13,7 +13,7 @@ void launch_launcher(void) {
         launcher.last_state =  launcher.state;
     }
 
-    if (launcher.load_sensor){
+    if (!launcher.load_sensor){
         launcher.loaded = 1;
         led_on(&led1);
         pin_clear(launcher.elevator_motor);
@@ -44,7 +44,7 @@ void rest_launcher(void) {
         launcher.last_state = launcher.state;
     }
 
-    if (launcher.load_sensor){
+    if (!launcher.load_sensor){
         launcher.loaded = 1;
         led_on(&led1);
         pin_clear(launcher.elevator_motor);
@@ -55,7 +55,7 @@ void rest_launcher(void) {
     }
 
     if (launcher.launch){
-        launcher.state = over_launcher;
+        launcher.state = launch_launcher;
     }
 
     /*if (state_launcher != last_state_launcher) {  // if we are leaving the state, do clean up stuff

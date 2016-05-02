@@ -11,6 +11,7 @@ void init_shooter(_PIN *load_sensor, _PIN *push_sensor, _PIN *push_motor, _PIN *
 void run_shooter(void);
 void over_shooter(void);
 void rest_shooter(void);
+void shoot_shooter(void);
 
 typedef struct {
     _PIN *load_sensor;

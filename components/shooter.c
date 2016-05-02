@@ -12,33 +12,32 @@ Shooter shooter;
 #define E 2.71
 #define MAX_SPEED 0xffff
 
+uint16_t speed_range = .75 * MAX_SPEED /(1.0 + pow(E,5.0));
+uint16_t top_speed = 0;
+uint16_t back_speed = 0;
+
 void shoot_shooter(void) {
     if (shooter.state != shooter.last_state) {  // if we are entering the state, do initialization stuff
         shooter.last_state =  shooter.state;
-        pin_set(shooter.push_motor);
-        led_on(&led2);
+        //Sigmoid function to define range of spinner variation
+        //https://www.wolframalpha.com/input/?i=(1%2F(1%2B2.7%5E(-x%2B5)))%2F1.5+from+0+to+10
+        speed_range = .75 * MAX_SPEED /(1.0 + pow(E,(-shooter.level+5)));
+        top_speed = MAX_SPEED - (rand()%speed_range);
+        back_speed = MAX_SPEED - (rand()%speed_range);
     }
 
-    if(shooter.load_sensor){
+    if(!shooter.load_sensor){
         shooter.loaded = 1;
         pin_clear(shooter.elevator_motor);
     }
 
     if(shooter.loaded){
-        //Sigmoid function to define range of spinner variation
-        //https://www.wolframalpha.com/input/?i=(1%2F(1%2B2.7%5E(-x%2B5)))%2F1.5+from+0+to+10
-        uint16_t speed_range = .75 * MAX_SPEED /(1.0 + pow(E,(-shooter.level+5)));
-        if (rand()%(shooter.level/2)){
-            pin_write(shooter.top_spin_motor, MAX_SPEED - (rand()%speed_range));
-            pin_write(shooter.back_spin_motor, MAX_SPEED - (rand()%speed_range));
-        } else {
-            uint16_t speed = MAX_SPEED - (rand()%speed_range);
-            pin_write(shooter.top_spin_motor, speed);
-            pin_write(shooter.back_spin_motor, speed);
-        }
-
+        pin_set(shooter.push_motor);
+        pin_write(shooter.top_spin_motor, top_speed);
+        pin_write(shooter.back_spin_motor, back_speed);
         if (!pin_read(shooter.push_sensor)) {
-            shooter.state = rest_shooter; }
+            shooter.state = rest_shooter;
+        }
     }
 
     if (shooter.over){
@@ -50,7 +49,6 @@ void shoot_shooter(void) {
         pin_set(shooter.elevator_motor);
         shooter.shoot = 0;
         shooter.loaded = 0;
-        led_off(&led2);
     }
 }
 
@@ -59,10 +57,9 @@ void rest_shooter(void) {
         shooter.last_state = shooter.state;
     }
 
-    if(shooter.load_sensor){
+    if(!shooter.load_sensor){
         shooter.loaded = 1;
         pin_clear(shooter.elevator_motor);
-        led_on(&led2);
     }
 
     if (shooter.over){
@@ -70,7 +67,8 @@ void rest_shooter(void) {
     }
 
     if (shooter.shoot){
-        shooter.state = over_shooter;
+        shooter.state = shoot_shooter;
+        led_on(&led2);
     }
 }
 
@@ -85,7 +83,6 @@ void over_shooter(void) {
         if (pin_read(shooter.push_sensor)) {
             pin_set(shooter.push_motor);
         }
-        led_on(&led2);
     }
 
     if (!pin_read(shooter.push_sensor)){
@@ -100,11 +97,11 @@ void over_shooter(void) {
         pin_set(shooter.elevator_motor);
         pin_write(shooter.top_spin_motor, MAX_SPEED*.75);
         pin_write(shooter.back_spin_motor, MAX_SPEED*.75);
-        led_off(&led2);
     }
 }
 
 void init_shooter(_PIN *load_sensor, _PIN *push_sensor, _PIN *push_motor, _PIN *elevator_motor, _PIN *top_spin_motor, _PIN *back_spin_motor, _OC *top_spin_oc, _OC *back_spin_oc) {
+    srand(0);
     pin_digitalIn(load_sensor);
     pin_digitalIn(push_sensor);
 
@@ -125,6 +122,7 @@ void init_shooter(_PIN *load_sensor, _PIN *push_sensor, _PIN *push_motor, _PIN *
     shooter.over = 1;
     shooter.shoot = 0;
     shooter.loaded = 0;
+    shooter.level = 0;
 
     shooter.state = over_shooter;
     shooter.last_state = (STATE_HANDLER_T)NULL;
