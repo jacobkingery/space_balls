@@ -16,11 +16,11 @@ void shoot_shooter(void) {
     if (shooter.state != shooter.last_state) {  // if we are entering the state, do initialization stuff
         shooter.last_state =  shooter.state;
         pin_set(shooter.push_motor);
+        led_on(&led2);
     }
 
     if(shooter.load_sensor){
         shooter.loaded = 1;
-        led_on(&led2);
         pin_clear(shooter.elevator_motor);
     }
 
@@ -49,6 +49,7 @@ void shoot_shooter(void) {
         pin_clear(shooter.push_motor);
         pin_set(shooter.elevator_motor);
         shooter.shoot = 0;
+        shooter.loaded = 0;
         led_off(&led2);
     }
 }
@@ -84,6 +85,7 @@ void over_shooter(void) {
         if (pin_read(shooter.push_sensor)) {
             pin_set(shooter.push_motor);
         }
+        led_on(&led2);
     }
 
     if (!pin_read(shooter.push_sensor)){
@@ -98,6 +100,7 @@ void over_shooter(void) {
         pin_set(shooter.elevator_motor);
         pin_write(shooter.top_spin_motor, MAX_SPEED);
         pin_write(shooter.back_spin_motor, MAX_SPEED);
+        led_off(&led2);
     }
 }
 

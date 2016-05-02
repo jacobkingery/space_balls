@@ -52,7 +52,7 @@ void rest_game(void) {
         timer_lower(game.decay_timer);
         game.decay_ticks++;
         if(game.decay_ticks == game.decay_limit){
-            /* game.life--; */
+            game.life--;
             game.decay_ticks = 0;
         }
     }
@@ -76,7 +76,7 @@ void rest_game(void) {
 
     if (!game.life){
         trigger_audio(LOSE);
-        /* game.state = over_game; */
+        game.state = over_game;
     }
 }
 
@@ -90,7 +90,8 @@ void over_game(void) {
 
         game.decay_ticks = 0;
         game.decay_limit = MAX_DECAY;
-        pix_fill_frac_c(0, &RED, NULL);
+        //        led_on(&led1);
+        //pix_fill_frac_c(0, &RED, NULL);
         write_display(game.score_display, 0, 0);
         write_display(game.level_display, game.level, 0);
         blink_display(game.score_display, 1);
@@ -109,7 +110,9 @@ void over_game(void) {
         game.state = rest_game;
     }
 
-    game.state = rest_game;
+    if (game.coin_flag) {
+        game.state = rest_game;
+    }
 
     if (game.state != game.last_state) {  // if we are leaving the state, do clean up stuff
         led_on(&led1);
@@ -138,14 +141,14 @@ void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display 
     game.level_ticks = 0;
     game.level_limit = MAX_LEVEL;
     game.level = 0;
-    timer_setPeriod(game.level_timer, .2);
+    timer_setPeriod(game.level_timer, 0.2);
     timer_start(game.level_timer);
 
     game.decay_timer = decay_timer;
     game.decay_ticks = 0;
     game.decay_limit = MAX_DECAY;
     game.life = MAX_LIFE;
-    timer_setPeriod(game.decay_timer, .1);
+    timer_setPeriod(game.decay_timer, 0.001);
     timer_start(game.decay_timer);
 
     game.score_display = score_display;
