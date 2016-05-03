@@ -8,6 +8,9 @@
 
 Launcher launcher;
 
+uint32_t limit_counter = 0;
+uint8_t limit_flag = 0;
+
 void launch_launcher(void) {
     if (launcher.state != launcher.last_state) {  // if we are entering the state, do initialization stuff
         launcher.last_state =  launcher.state;
@@ -21,7 +24,15 @@ void launch_launcher(void) {
 
     if(launcher.loaded){
         pin_set(launcher.launch_motor);
-        if (!pin_read(launcher.launch_sensor)) {
+        if(!pin_read(launcher.launch_sensor)){
+            limit_flag = 1;
+        }
+
+        if (pin_read(launcher.launch_sensor) && limit_flag) {
+            limit_counter++;
+        }
+
+        if (limit_counter >= 100){
             launcher.state = rest_launcher;
         }
     }
@@ -36,6 +47,8 @@ void launch_launcher(void) {
         launcher.launch = 0;
         launcher.loaded = 0;
         led_off(&led1);
+        limit_flag = 0;
+        limit_counter = 0;
     }
 }
 

@@ -14,7 +14,7 @@ void shoot_gun(void) {
     }
 
     // Perform state tasks
-    if (pin_read(gun.camera)||!sw_read(&sw2)){
+    if (pin_read(gun.camera)){
         gun.hit_flag = 1;
         trigger_audio(HIT);
     } else {
@@ -32,7 +32,7 @@ void rest_gun(void) {
     }
     // Check for state transitions
     if (timer_flag(gun.rof_timer)){
-        if ((pin_read(gun.l_trigger) || pin_read(gun.r_trigger))||!sw_read(&sw2)||!sw_read(&sw3)) {
+        if ((pin_read(gun.l_trigger) || pin_read(gun.r_trigger))) {
             timer_lower(gun.rof_timer);
             gun.state = shoot_gun;
         }
