@@ -62,6 +62,7 @@ void rest_game(void) {
 
     if (game.hit_flag){
         game.score += 25;
+        game.hit_flag = 0;
         game.life += 10;
         if (game.life > MAX_LIFE){
             game.life = MAX_LIFE;
@@ -135,6 +136,7 @@ void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display 
     game.score = 0;
     game.high = 0;
 
+    pin_digitalIn(coin_op);
     game.coin_op = coin_op;
 
     game.level_timer = level_timer;

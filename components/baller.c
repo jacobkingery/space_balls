@@ -84,7 +84,7 @@ void init_baller(_PIN *sort_motor, _OC *sort_oc, _TIMER *rol_timer, Shooter *sho
     baller.rol_timer = rol_timer;
     baller.rol_limit = 100;
     baller.rol_ticks = 0;
-    timer_setPeriod(baller.rol_timer, .01);
+    timer_setPeriod(baller.rol_timer, .002);
     timer_start(baller.rol_timer);
 
     baller.sort_motor = sort_motor;

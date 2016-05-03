@@ -10,7 +10,7 @@
 Shooter shooter;
 
 #define E 2.71
-#define MAX_SPEED 0xffff
+#define MAX_SPEED (uint16_t)0xffff*.75
 
 uint16_t speed_range = .75 * MAX_SPEED /(1.0 + pow(E,5.0));
 uint16_t top_speed = 0;
