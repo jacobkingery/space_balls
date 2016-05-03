@@ -16,7 +16,7 @@ uint16_t speed_range = .75 * MAX_SPEED /(1.0 + pow(E,5.0));
 uint16_t top_speed = 0;
 uint16_t back_speed = 0;
 
-uint32_t pusher_counter = 0;
+uint32_t push_counter = 0;
 void shoot_shooter(void) {
     if (shooter.state != shooter.last_state) {  // if we are entering the state, do initialization stuff
         shooter.last_state =  shooter.state;
@@ -38,8 +38,7 @@ void shoot_shooter(void) {
         pin_set(shooter.push_motor);
         pin_write(shooter.top_spin_motor, top_speed);
         pin_write(shooter.back_spin_motor, back_speed);
-        pusher_counter++;
-        if (!pin_read(shooter.push_sensor) && pusher_counter>100) {
+        if (!pin_read(shooter.push_sensor) && push_counter>100) {
             shooter.state = rest_shooter;
         }
     }
@@ -54,7 +53,7 @@ void shoot_shooter(void) {
         shooter.shoot = 0;
         shooter.loaded = 0;
         led_off(&led2);
-        pusher_counter = 0;
+        push_counter = 0;
     }
 }
 

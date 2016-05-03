@@ -57,6 +57,10 @@ void over_gun(void) {
 }
 
 void init_gun(_PIN *camera, _PIN *l_trigger, _PIN *r_trigger, _TIMER *rof_timer) {
+    pin_digitalIn(camera);
+    pin_digitalIn(l_trigger);
+    pin_digitalIn(r_trigger);
+
     gun.camera = camera;
     gun.l_trigger = l_trigger;
     gun.r_trigger = r_trigger;
