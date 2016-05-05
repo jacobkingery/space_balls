@@ -5,20 +5,18 @@ import pygame
 
 class Speaker(object):
     def __init__(self):
-        pygame.init()
-        pygame.mixer.init()
-        self.mixer = pygame.mixer.music
+        pygame.mixer.init(44100)
         self.pin = 10
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.pin, GPIO.IN)
         self.sounds = {
-            0: "sounds/start.ogg",
-            1: "sounds/shoot.ogg",
-            2: "sounds/hit.ogg",
-            3: "sounds/lose.ogg"
+            0: pygame.mixer.Sound('sounds/start.ogg'),
+            1: pygame.mixer.Sound('sounds/shoot.ogg'),
+            2: pygame.mixer.Sound('sounds/hit.ogg'),
+            3: pygame.mixer.Sound('sounds/lose.ogg')
         }
-        self.SEND_AUDIO = 0;
+        self.SEND_SOUND = 0;
         self.dev = usb.core.find(idVendor = 0x6666, idProduct = 0x0003)
         if self.dev is None:
             raise ValueError('No USB device found matching idVendor and idProduct')
@@ -29,23 +27,27 @@ class Speaker(object):
 
     def receive_sound(self, channel):
         try:
-            sound = self.dev.ctrl_transfer(0x40, self.SEND_AUDIO)
+            sound = self.dev.ctrl_transfer(0xC0, self.SEND_SOUND, 0, 0, 1)[0]
             if sound in self.sounds:
-                print("Playing:", self.sounds[sound])
-                mixer.load(self.sounds[sound])
+                print 'Playing:', sound
+                self.sounds[sound].play()
             else:
-                print("Sound not Found")
+                print 'Sound not found'
         except:
-            print("receiving falure")
+            print 'Receiving failure'
 
 
 def main():
-    try:
-        speaker = Speaker()
-        while True:
-            time.sleep(1);
-    except:
-        GPIO.cleanup()
+    while True:
+        try:
+            speaker = Speaker()
+            while True:
+                time.sleep(1);
+        except KeyboardInterrupt:
+            exit(0)
+        except:
+            print 'Error, restarting'
+            GPIO.cleanup()
 
 if __name__ == '__main__':
     main()
