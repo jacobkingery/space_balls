@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>SPACEBALLS: The ELectrical System</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/custom.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="title">SPACEBALLS: The Arcade Game</a>
+				<nav>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="mechanical.html">Mechanical</a></li>
+						<li><a href="software.html">Software</a></li>
+						<li><a href="electrical.html" class="active">Electrical</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main" class="wrapper">
+						<div class="inner">
+							<h1 class="major">Electrical System</h1>
+							<span class="image fit"><img src="images/electrical_block_diagram.png" alt="" /></span>
+							<p>The image above shows a block diagram of the electrical system. Specific electrical details are discussed below.</p>
+
+							<h2>Motor Drivers</h2>
+							<span class="image"><img id="driver" src="images/motordriver.png" alt="" /></span>
+							<p>We used a very simple motor driver circuit to control our motors. When the Darlington array is activated by the input pin, it allows current to flow through it and, thus, turns on the motor. This driver can do variable speed via PWM, but can only drive the motor in one direction, which is fine for our use case. The driver shown powers the motor with 12V, which is used for six of our motors, but the sorter motor is powered with 3.3V because it needs to go much slower. The Darlington array used is a TIP120, which can source a hearty 5A of current. The flyback diode, a 1N4007, offers protection from the voltage spike that can occur when the motor is stopped.</p>
+
+							<h2>Break Beam Sensors</h2>
+							<span class="image"><img id="beam" src="images/breakbeam.png" alt="" /></span>
+							<p>We also used a simple visible light break beam sensor to detect when balls are loaded into the launchers. When the photoresistor is illuminated, the output voltage is around 2V, a logical high. When it is blocked by a ball, the output voltage is around 0.6V, a logical low.</p>
+
+							<h2>Power Supply</h2>
+							<p>To power the entire system, we used an 305W ATX computer power supply. The total power draw of our system is around 125W, with the current requirements of each voltage source well below the ratings of the power supply.</p>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
