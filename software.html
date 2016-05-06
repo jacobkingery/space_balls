@@ -24,8 +24,8 @@
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="mechanical.html">Mechanical</a></li>
-                        <li><a href="software.html">Software</a></li>
-                        <li><a href="electrical.html" class="active">Electrical</a></li>
+                        <li><a href="software.html" class="active">Software</a></li>
+                        <li><a href="electrical.html">Electrical</a></li>
                     </ul>
                 </nav>
             </header>
@@ -37,11 +37,21 @@
                     <section id="main" class="wrapper">
                         <div class="inner">
                             <h1 class="major">Software System</h1>
-                            <p>The software architecture is heavily inspired both by Brad A. Minch's state machine format and Facebook's React composable and nestable component architecture. The combination of the two influences gave us a easy to reason about system with simple components that mirror physical parts of our system. This allowed for earier debugging and easy separtion of tasks amoung team members. We overcame the namespacing issues of C by giving each state machine a respective component struct which housed all of that machine's state variables.</p>
+                            <p>The software architecture is heavily inspired both by Brad A. Minch's state machine format and Facebook's React composable and nestable component architecture. The combination of the two influences gave us an easy-to-reason-about system with simple components that mirror physical parts of our system. This allowed for easier debugging and easy separation of tasks among team members. We overcame the namespacing issues of C by giving each state machine a respective component struct which housed all of that machine's state variables.</p>
 
                             <h2>State Machines</h2>
                             <span class="image"><img id="stateMachines" src="images/stateMachine.jpg" alt="" /></span>
-                            <p> This is an overview of each of our state machines and their enter and exit transitions. To be explicit, the baller state machine is the "parent" of both launcher state machines and directly triggers their state transitions</p>
+                            <p>This is an overview of each of our state machines and their enter and exit transitions. To be explicit, the baller state machine is the "parent" of both launcher state machines and directly triggers their state transitions</p>
+
+                            <h2>Computer Vision</h2>
+                            <span class="image"><img id="cv" src="images/cv.png" alt="" /></span>
+                            <p>To detect if a ball is hit, we use a Raspberry Pi with <a href="http://picamera.readthedocs.io/" target="_blank">camera module</a>. We take a 160x120 pixel image around XX times per second, crop it down to the middle 40x40 pixels, and check the average color value to decide if there is a ball in front of the camera or not. The Raspberry Pi is doing this constantly and outputting a high or low on a GPIO pin to signal to the PIC what it sees. The PIC checks this pin when the gun is in the "shoot" state and records a hit or miss depending on the reading.</p>
+
+                            <h2>Audio</h2>
+                            <p>We added audio to our game using the Raspberry Pi already in the system. The PIC and Raspberry Pi are connected by a USB cable, with the PIC acting as the peripheral. When the game code wants to play a sound, the PIC raises a digital pin high that is connected to the Raspberry Pi's GPIO header. This signals the Raspberry Pi to start a USB transaction. Unfortunately, the peripheral (the PIC) cannot initialize the transaction, which is why we need the signal line. The Raspberry Pi determines which sound to play based on the USB response from the PIC, and then plays it using <a href="http://www.pygame.org/" target="_blank">pygame</a>.</p>
+
+                            <h2>Full Code</h2>
+                            <p>The entirety of our code can be found on our <a href="https://github.com/jacobkingery/space_balls" target="_blank">GitHub repository</a>.</p>
                         </div>
                     </section>
 
