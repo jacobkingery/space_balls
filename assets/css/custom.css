@@ -1,3 +1,15 @@
-#driver, #beam {
-	width: 350px;
+#driver,
+#beam,
+#sorter,
+#gun {
+    width: 350px;
+}
+
+#spring-linkage {
+    width: 250px;
+}
+
+#spring-launcher,
+#wheel-launcher {
+    width: 450px;
 }

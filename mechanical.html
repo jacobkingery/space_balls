@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<!--
+    Hyperspace by HTML5 UP
+    html5up.net | @n33co
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+    <head>
+        <title>SPACEBALLS: The Mechanical System</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/custom.css" />
+        <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+        <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    </head>
+    <body>
+
+        <!-- Header -->
+            <header id="header">
+                <a href="index.html" class="title">SPACEBALLS: The Arcade Game</a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="mechanical.html" class="active">Mechanical</a></li>
+                        <li><a href="software.html">Software</a></li>
+                        <li><a href="electrical.html">Electrical</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+        <!-- Wrapper -->
+            <div id="wrapper">
+
+                <!-- Main -->
+                    <section id="main" class="wrapper">
+                        <div class="inner">
+                            <h1 class="major">Mechanical System</h1>
+                            <h2>The Baller</h2>
+                            <p>The baller is the most complex and important system in the game. It is responsible for making sure that the player actually has balls to shoot. It has three primary parts. There are two launchers that actually shoot the balls into the air. Then, once the balls fall down, the fall it a sorting mechanism. This mechanism funnels them into two loading mechanisms that return the balls to the launchers.</p>
+                            <h3>The Launchers</h3>
+                            <p>There are two different types of launchers on the system. On is a spring loaded launcher that catapults the balls into the air. The other is a spinning wheel launcher that shoots the balls into the air similarly to a pitching machine. The reason that we have two different designs is that our first design, the spring loaded launcher, looked as if it would be likely to fail approximately a week before the project deadline. The high loads on the shooting linkage were causing it to fall apart every time that it launched more than ten balls in a row. Therefore, we chose to also design and test the wheeled shooter. During this period of time, we realized that the reason that the spring loaded shooter was falling apart was because it needed a hard stop at the end of the sprung actuation in order to reduce the loads on the linkage. Therefore, we ended up with two different systems that both worked and chose to simply use two different types of launchers rather than attempt to build another one in the short period of time that we had.</p>
+
+                            <h4>Spring Loaded</h4>
+                            <p>The spring loaded launcher uses a linkage to pull back a spring loaded platform. The linkage has a link that will release rapidly when it goes over-center, causing the ball to launch. The gif below shows how this works.</p>
+                            <span class="image"><img id="spring-linkage" src="images/spring_loaded.gif" alt="" /></span>
+
+                            <p>This launcher is loaded via a mechanism that only lets one ball into the machine at once.</p>
+                            <span class="image"><img id="spring-launcher" src="images/spring_launcher.gif" alt="" /></span>
+                            <p>There is a break beam sensor that determines if there is a ball that is ready to be loaded. Once there is a ball loaded and the software has given the command to fire, the motor turns until a limit switch has been hit that determines when the cycle is over.</p>
+
+                            <p>There were numerous challenges associated with building this system. The linkage undergoes very high loading, especially when it needs to stop the platform at the end of the spring loaded actuation. We went through four major iterations of this system. We started with a very simple proof of concept that was developed in less than a day. This prototype showed us that the concept was possible. However, the linkage was made from laser cut delrin parts that almost immediately snapped. The second iteration used an aluminum linkage, and was also designed such that it could fit into the overall system properly. However, this linkage also was inefficient because there was aluminum on aluminum contact that caused rubbing. Additionally, the 3D printed platform that actually launched the ball broke due to the bearing stresses of pulling back the platform. The third iteration fixed the issues with the launch platform, but there were still problems with the linkage. The fourth iteration finally fixed the issues with the linkage by using an entirely CNC machined linkage that used shoulder screws and bronze bushings. It also included a hard stop at the top of the device so that the force of stopping the launch platform would not be on the linkage, but rather on the hard stop. This design was shown to work for many ball launches.</p>
+
+                            <h4>Spinning Wheel</h4>
+                            <p>The wheeled launcher was developed when we had issues with the spring loaded launcher pulling itself apart due to the launch forces. These issues were later fixed through the use of the hard stop, but at this point we were concerned that the spring loaded launcher would never be reliable and therefore chose to use our backup plan. In retrospect, we should have been using wheeled launchers the entire time. However, our initial prototype was unreliable because the balls that we tested with compressed unreliably. We therefore decided to build a spring loaded launcher instead. The balls that we ended up using for our final design compressed much more reliably, and therefore a spinning wheel launcher was more plausible.</p>
+
+                            <p>This launcher works through having two rollers connected to ungeared DC motors through spider shaft couplings machined into the shafts. The ball is forced into these rollers through a crank slider linkage. It uses a similar break beam sensor to the spring loaded linkage in order to determine when the launcher is loaded and ready to fire.</p>
+                            <span class="image"><img id="wheel-launcher" src="images/wheel_launcher.gif" alt="" /></span>
+                            <p>This launcher was much less of a challenge to build. It is also more reliable. It is clear now that building two of these would have been a much better plan, however, our initial tests did not show this, so we also developed the spring loaded launcher.</p>
+
+                            <h3>The Sorter</h3>
+                            <p>The balls are returned to the launchers via a sorting mechanism and an elevator system. The sorting mechanism is a rotating wheel that clears ball jams. The elevator uses round belts an aluminum rods to bring the balls back to the launchers.</p>
+                            <span class="image"><img id="sorter" src="images/sorter.png" alt="" /></span>
+
+                            <h2>The Cabinet</h2>
+                            The cabinet is made out of CNC routed 3/4" plywood. It is designed in two parts such that it is easier to work on the baller while the baller is assembled into the cabinet. The top part has no electronics or mechanical components and is intended for ball containment only. It is therefore an entirely separate component. All of the electronics are mounted into the base part of the cabinet on MDF electronics boards.
+
+                            <h2>The Gun</h2>
+                            The gun in the main interaction that a player has with the machine. It is therefore more of a prop than a mechanical component. With this in mind, it was designed to look similar to the Millennium Falcon's turret gun. It houses a Raspberry Pi and a camera that senses whether it hits its target or not.
+                            <span class="image"><img id="gun" src="images/gun.png" alt="" /></span>
+
+                        </div>
+                    </section>
+
+            </div>
+
+        <!-- Footer -->
+            <footer id="footer" class="wrapper alt">
+                <div class="inner">
+                    <ul class="menu">
+                        <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                    </ul>
+                </div>
+            </footer>
+
+        <!-- Scripts -->
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/jquery.scrollex.min.js"></script>
+            <script src="assets/js/jquery.scrolly.min.js"></script>
+            <script src="assets/js/skel.min.js"></script>
+            <script src="assets/js/util.js"></script>
+            <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+            <script src="assets/js/main.js"></script>
+
+    </body>
+</html>
