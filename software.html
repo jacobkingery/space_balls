@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<!--
+    Hyperspace by HTML5 UP
+    html5up.net | @n33co
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+    <head>
+        <title>SPACEBALLS: The ELectrical System</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/custom.css" />
+        <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+        <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    </head>
+    <body>
+
+        <!-- Header -->
+            <header id="header">
+                <a href="index.html" class="title">SPACEBALLS: The Arcade Game</a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="mechanical.html">Mechanical</a></li>
+                        <li><a href="software.html">Software</a></li>
+                        <li><a href="electrical.html" class="active">Electrical</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+        <!-- Wrapper -->
+            <div id="wrapper">
+
+                <!-- Main -->
+                    <section id="main" class="wrapper">
+                        <div class="inner">
+                            <h1 class="major">Software System</h1>
+                            <p>The software architecture is heavily inspired both by Brad A. Minch's state machine format and Facebook's React composable and nestable component architecture. The combination of the two influences gave us a easy to reason about system with simple components that mirror physical parts of our system. This allowed for earier debugging and easy separtion of tasks amoung team members. We overcame the namespacing issues of C by giving each state machine a respective component struct which housed all of that machine's state variables.</p>
+
+                            <h2>State Machines</h2>
+                            <span class="image"><img id="stateMachines" src="images/stateMachine.jpg" alt="" /></span>
+                            <p> This is an overview of each of our state machines and their enter and exit transitions. To be explicit, the baller state machine is the "parent" of both launcher state machines and directly triggers their state transitions</p>
+                        </div>
+                    </section>
+
+            </div>
+
+        <!-- Footer -->
+            <footer id="footer" class="wrapper alt">
+                <div class="inner">
+                    <ul class="menu">
+                        <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                    </ul>
+                </div>
+            </footer>
+
+        <!-- Scripts -->
+            <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/jquery.scrollex.min.js"></script>
+            <script src="assets/js/jquery.scrolly.min.js"></script>
+            <script src="assets/js/skel.min.js"></script>
+            <script src="assets/js/util.js"></script>
+            <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+            <script src="assets/js/main.js"></script>
+
+    </body>
+</html>
