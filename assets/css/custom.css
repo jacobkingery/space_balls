@@ -10,6 +10,34 @@
 }
 
 #spring-launcher,
-#wheel-launcher {
+#wheel-launcher,
+#cv {
     width: 450px;
 }
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    width: 60vw;
+}
+
+.cab{
+    height: 5vh;
+}
+
+.video .game{
+    text-align: center;
+}
+
+.timeline{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+}
+
