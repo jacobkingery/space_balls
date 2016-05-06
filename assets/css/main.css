@@ -16,7 +16,11 @@
     width: 60vw;
 }
 
-.video{
+.cab{
+    height: 5vh;
+}
+
+.video .game{
     text-align: center;
 }
 
