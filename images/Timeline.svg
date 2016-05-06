@@ -41,7 +41,7 @@
    fit-margin-right="0"
    fit-margin-bottom="0"
    inkscape:zoom="1.1232296"
-   inkscape:cx="528.06044"
+   inkscape:cx="371.36941"
    inkscape:cy="86.629186"
    inkscape:window-x="65"
    inkscape:window-y="24"
@@ -231,59 +231,69 @@
    transform="matrix(0.92241282,-0.38620537,0.38620537,0.92241282,0,0)"
    font-size="12"
    id="text37"
-   style="font-size:11.99983311px;font-family:MachineStd"
+   style="font-size:10.00000005000000058px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff;opacity:0.55"
    x="-16.687359"
-   y="48.687973">Team Formation</text>
+   y="48.687973"
+   sodipodi:linespacing="125%">Team Formation</text>
+
 
 <text
    transform="matrix(0.92241282,-0.38620537,0.38620537,0.92241282,0,0)"
    font-size="12"
    id="text39"
-   style="font-size:11.99983311px;font-family:MachineStd"
+   style="font-size:10.00000005000000058px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff;opacity:0.55"
    x="133.45876"
-   y="111.5527">Game Design</text>
+   y="111.5527"
+   sodipodi:linespacing="125%">Game Design</text>
+
 
 <text
    transform="matrix(0.92241282,-0.38620537,0.38620537,0.92241282,0,0)"
    font-size="12"
    id="text41"
-   style="font-size:11.99983311px;font-family:MachineStd"
+   style="font-size:10.00000005000000058px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff;opacity:0.55"
    x="207.25179"
-   y="142.44914">Launcher Prototype</text>
+   y="142.44914"
+   sodipodi:linespacing="125%">Launcher Prototype</text>
+
 
 <text
    transform="matrix(0.92317157,0.38438816,-0.38438816,0.92317157,0,0)"
    id="text43"
    x="210.01173"
    y="-5.4402299"
-   style="font-size:12.00037003px"><tspan
+   style="font-size:10.00000001000000083px;-inkscape-font-specification:Arial;font-family:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff;opacity:0.55"
+   sodipodi:linespacing="125%"><tspan
      x="210.01173"
      y="-5.4402299"
      font-size="12"
      id="tspan45"
-     style="font-size:12.00037003px;font-family:MachineStd">Launcher</tspan><tspan
+     style="font-size:10.00000001000000083px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff">Launcher</tspan><tspan
      x="214.69289"
      y="5.9601207"
      font-size="12"
      id="tspan47"
-     style="font-size:12.00037003px;font-family:MachineStd">Testing</tspan></text>
+     style="font-size:10.00000001000000083px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff">Testing</tspan></text>
+
 
 <text
    transform="matrix(0.92317157,0.38438816,-0.38438816,0.92317157,0,0)"
    id="text49"
    x="120.43336"
    y="32.144943"
-   style="font-size:12.00037003px"><tspan
+   style="font-size:10.00000001000000083px;-inkscape-font-specification:Arial;font-family:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff;opacity:0.55"
+   sodipodi:linespacing="125%"><tspan
      x="120.43336"
      y="32.144943"
      font-size="12"
      id="tspan51"
-     style="font-size:12.00037003px;font-family:MachineStd">Ball Sensing</tspan><tspan
+     style="font-size:10.00000001000000083px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff">Ball Sensing</tspan><tspan
      x="133.15376"
      y="43.545296"
      font-size="12"
      id="tspan53"
-     style="font-size:12.00037003px;font-family:MachineStd">Testing</tspan></text>
+     style="font-size:10.00000001000000083px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff">Testing</tspan></text>
+
 
 <line
    stroke-miterlimit="10"
@@ -297,9 +307,11 @@
    transform="matrix(0.92241282,-0.38620537,0.38620537,0.92241282,0,0)"
    font-size="12"
    id="text57"
-   style="font-size:11.99983311px;font-family:MachineStd"
+   style="font-size:10.00000005000000058px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff;opacity:0.55"
    x="293.03616"
-   y="178.36624">Audio and Displays</text>
+   y="178.36624"
+   sodipodi:linespacing="125%">Audio and Displays</text>
+
 
 <line
    stroke-miterlimit="10"
@@ -313,9 +325,11 @@
    transform="matrix(0.92241282,-0.38620537,0.38620537,0.92241282,0,0)"
    font-size="12"
    id="text61"
-   style="font-size:11.99983311px;font-family:MachineStd"
+   style="font-size:10.00000005000000058px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff;opacity:0.55"
    x="405.57053"
-   y="225.48329">Baller Assembled</text>
+   y="225.48329"
+   sodipodi:linespacing="125%">Baller Assembled</text>
+
 
 <line
    stroke-miterlimit="10"
@@ -329,9 +343,11 @@
    transform="matrix(0.92317157,0.38438816,-0.38438816,0.92317157,0,0)"
    font-size="12"
    id="text65"
-   style="font-size:12.00037003px;font-family:MachineStd"
+   style="font-size:10.00000001000000083px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff;opacity:0.55"
    x="294.91351"
-   y="-38.105602">Game Code</text>
+   y="-38.105602"
+   sodipodi:linespacing="125%">Game Code</text>
+
 
 <line
    stroke-miterlimit="10"
@@ -346,17 +362,19 @@
    id="text69"
    x="440.66434"
    y="-99.319771"
-   style="font-size:12.00037003px"><tspan
+   style="font-size:10.00000001000000083px;-inkscape-font-specification:Arial;font-family:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff;opacity:0.55"
+   sodipodi:linespacing="125%"><tspan
      x="440.66434"
      y="-99.319771"
      font-size="12"
      id="tspan71"
-     style="font-size:12.00037003px;font-family:MachineStd">Cut</tspan><tspan
+     style="font-size:10.00000001000000083px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff">Cut</tspan><tspan
      x="431.54404"
      y="-87.919426"
      font-size="12"
      id="tspan73"
-     style="font-size:12.00037003px;font-family:MachineStd">Cabinet</tspan></text>
+     style="font-size:10.00000001000000083px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff">Cabinet</tspan></text>
+
 
 <line
    stroke-miterlimit="10"
@@ -371,17 +389,19 @@
    id="text77"
    x="481.10913"
    y="-114.22113"
-   style="font-size:12.00037003px"><tspan
+   style="font-size:10.00000001000000083px;-inkscape-font-specification:Arial;font-family:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff;opacity:0.55"
+   sodipodi:linespacing="125%"><tspan
      x="481.10913"
      y="-114.22113"
      font-size="12"
      id="tspan79"
-     style="font-size:12.00037003px;font-family:MachineStd">Final</tspan><tspan
+     style="font-size:10.00000001000000083px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff">Final</tspan><tspan
      x="469.10977"
      y="-102.82078"
      font-size="12"
      id="tspan81"
-     style="font-size:12.00037003px;font-family:MachineStd">Electrical</tspan></text>
+     style="font-size:10.00000001000000083px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff">Electrical</tspan></text>
+
 
 <line
    stroke-miterlimit="10"
@@ -395,8 +415,10 @@
    transform="matrix(0.92241282,-0.38620537,0.38620537,0.92241282,0,0)"
    font-size="12"
    id="text85"
-   style="font-size:11.99983311px;font-family:MachineStd"
+   style="font-size:10.00000005000000058px;font-family:Arial;-inkscape-font-specification:Arial;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;fill:#ffffff;opacity:0.55"
    x="442.46704"
-   y="240.9315">Final Code</text>
+   y="240.9315"
+   sodipodi:linespacing="125%">Final Code</text>
+
 
 </svg>
