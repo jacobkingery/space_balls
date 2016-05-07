@@ -30,14 +30,14 @@ void rest_baller(void) {
         }
         if(baller.rol_ticks >= baller.rol_limit){
             if(rand()%2){
-                pin_write(baller.sort_motor, 0xccc);
+                pin_write(baller.sort_motor, 0x8000);
                 if(!baller.shooter->shoot){
                     baller.shooter->shoot = 1;
                 } else {
                     baller.launcher->launch = 1;
                 }
             } else {
-                pin_write(baller.sort_motor, 0x1998);
+                pin_write(baller.sort_motor, 0x6400);
                 if(!baller.launcher->launch){
                     baller.launcher->launch = 1;
                 } else {
@@ -50,9 +50,6 @@ void rest_baller(void) {
     if (!baller.level){
         baller.state = over_baller;
     }
-
-    /*if (state_baller != last_state_baller) {  // if we are leaving the state, do clean up stuff
-      }*/
 }
 
 void over_baller(void) {
@@ -76,7 +73,7 @@ void over_baller(void) {
 
     if (baller.state != baller.last_state) {  // if we are leaving the state, do clean up stuff
         timer_start(baller.rol_timer);
-        pin_write(baller.sort_motor, 0xccc);
+        pin_write(baller.sort_motor, 0x8000);
         baller.launcher->over = 0;
         baller.shooter->over = 0;
     }
