@@ -74,7 +74,6 @@ void rest_game(void) {
     if (!game.life){
         trigger_audio(LOSE);
         game.state = over_game;
-        led_on(&led3);
     }
 }
 
@@ -163,7 +162,6 @@ void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display 
 }
 
 uint8_t run_game(uint8_t hit_flag) {
-    ServiceUSB();                       // service any pending USB requests
     game.hit_flag = hit_flag;
     game.state();
     return game.level;
