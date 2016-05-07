@@ -41,12 +41,10 @@ void rest_gun(void) {
     if (!gun.level){
         gun.state = over_gun;
     }
-    /*if (state_gun != last_state_gun) {  // if we are leaving the state, do clean up stuff
-      }*/
 }
 
 void over_gun(void) {
-    if ((pin_read(gun.l_trigger) || pin_read(gun.r_trigger))){
+    if (!pin_read(gun.l_trigger) || !pin_read(gun.r_trigger)){
         gun.hit_flag = 1;
     } else {
         gun.hit_flag = 0;

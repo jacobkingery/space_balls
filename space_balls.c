@@ -39,12 +39,11 @@ int16_t main(void) {
     uint8_t level = 0;
     uint8_t hit_flag = 0;
     while (1) {
-        ServiceUSB();
+        ServiceUSB(); // usb times out if not checked fast enough :/
         level = run_game(hit_flag);
         ServiceUSB();
         hit_flag = run_gun(level);
         ServiceUSB();
         run_baller(level);
-        ServiceUSB();
     }
 }

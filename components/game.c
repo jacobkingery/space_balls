@@ -67,9 +67,9 @@ void rest_game(void) {
         if (game.life > MAX_LIFE){
             game.life = MAX_LIFE;
         }
+        write_display(game.score_display, game.score, 0);
     }
 
-    write_display(game.score_display, game.score, 0);
     // Check for state transitions
     if (!game.life){
         trigger_audio(LOSE);
@@ -99,37 +99,33 @@ void over_game(void) {
         write_display(game.high_display, game.high, 0);
         write_display(game.score_display, game.score, 0);
         blink_display(game.score_display, 1);
-        game.score = 0;
+        game.hit_flag = 0;
     }
 
     //run state logic
     if (pin_read(game.coin_op)) {
         game.coin_flag = 1;
+        trigger_audio(START);
     }
 
     if (game.hit_flag && game.coin_flag) {
         game.state = rest_game;
-    }
-
-    if (game.coin_flag) {
-        game.state = rest_game;
+        game.hit_flag = 0;
+        game.coin_flag = 0;
     }
 
     if (game.state != game.last_state) {  // if we are leaving the state, do clean up stuff
         game.level = 1;
         game.life = MAX_LIFE;
-        game.coin_flag = 0;
         game.score = 0;
         blink_display(game.score_display, 0);
         write_display(game.score_display, game.score, 0);
         timer_start(game.level_timer);
         timer_start(game.decay_timer);
-        trigger_audio(START);
     }
 }
 
 void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display *score_display, Display *high_display) {
-
     game.hit_flag = 0;
     game.coin_flag = 0;
     game.score = 0;
@@ -149,7 +145,7 @@ void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display 
     game.decay_ticks = 0;
     game.decay_limit = MAX_DECAY;
     game.life = MAX_LIFE;
-    timer_setPeriod(game.decay_timer, 0.001);
+    timer_setPeriod(game.decay_timer, 0.002);
     timer_start(game.decay_timer);
 
     game.score_display = score_display;
@@ -163,6 +159,11 @@ void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display 
 
 uint8_t run_game(uint8_t hit_flag) {
     game.hit_flag = hit_flag;
+    if(game.hit_flag){
+        led_on(&led3);
+    } else {
+        led_off(&led3);
+    }
     game.state();
     return game.level;
 }

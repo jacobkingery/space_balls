@@ -41,10 +41,10 @@ void shoot_shooter(void) {
         if (!pin_read(shooter.push_sensor) && push_counter>100) {
             shooter.state = rest_shooter;
         }
-    }
-
-    if (shooter.over){
-        shooter.state = over_shooter;
+    } else {
+        if (shooter.over){
+            shooter.state = over_shooter;
+        }
     }
 
     if (shooter.state != shooter.last_state) {  // if we are leaving the state, do clean up stuff
@@ -67,13 +67,13 @@ void rest_shooter(void) {
         pin_clear(shooter.elevator_motor);
         led_on(&led2);
     }
+
     if (shooter.over){
         shooter.state = over_shooter;
     }
 
     if (shooter.shoot){
         shooter.state = shoot_shooter;
-        led_on(&led2);
     }
 }
 

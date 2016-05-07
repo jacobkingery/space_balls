@@ -30,12 +30,14 @@ void rest_baller(void) {
         }
         if(baller.rol_ticks >= baller.rol_limit){
             if(rand()%2){
+                pin_write(baller.sort_motor, 0xccc);
                 if(!baller.shooter->shoot){
                     baller.shooter->shoot = 1;
                 } else {
                     baller.launcher->launch = 1;
                 }
             } else {
+                pin_write(baller.sort_motor, 0x1998);
                 if(!baller.launcher->launch){
                     baller.launcher->launch = 1;
                 } else {
@@ -74,7 +76,7 @@ void over_baller(void) {
 
     if (baller.state != baller.last_state) {  // if we are leaving the state, do clean up stuff
         timer_start(baller.rol_timer);
-        pin_write(baller.sort_motor, 0xcccc);
+        pin_write(baller.sort_motor, 0xccc);
         baller.launcher->over = 0;
         baller.shooter->over = 0;
     }
@@ -89,7 +91,7 @@ void init_baller(_PIN *sort_motor, _OC *sort_oc, _TIMER *rol_timer, Shooter *sho
 
     baller.sort_motor = sort_motor;
     baller.sort_oc = sort_oc;
-    oc_pwm(sort_oc, baller.sort_motor, NULL, 10e3, 0x0);
+    oc_pwm(sort_oc, baller.sort_motor, NULL, 50, 0x0);
 
     //initialize random number generator
     srand(0);
