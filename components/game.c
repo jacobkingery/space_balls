@@ -11,6 +11,7 @@
 #include "pix.h"
 
 #define MAX_DECAY 100
+#define MAX_LOSE 20
 #define MAX_LIFE  100
 #define MAX_LEVEL 100
 #define E 2.71
@@ -72,8 +73,8 @@ void rest_game(void) {
 
     // Check for state transitions
     if (!game.life){
-        trigger_audio(LOSE);
         game.state = over_game;
+        game.lose = 1;
     }
 }
 
@@ -102,6 +103,17 @@ void over_game(void) {
         game.hit_flag = 0;
     }
 
+    if (game.lose){
+        if (timer_flag(game.level_timer)) {
+            timer_lower(game.level_timer);
+            game.lose_ticks++;
+            if(game.lose_ticks == MAX_LOSE){
+                trigger_audio(LOSE);
+                game.lose = 0;
+            }
+        }
+    }
+
     //run state logic
     if (pin_read(game.coin_op)) {
         game.coin_flag = 1;
@@ -118,6 +130,7 @@ void over_game(void) {
         game.level = 1;
         game.life = MAX_LIFE;
         game.score = 0;
+        game.lose = 0;
         blink_display(game.score_display, 0);
         write_display(game.score_display, game.score, 0);
         timer_start(game.level_timer);
@@ -138,6 +151,10 @@ void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display 
     game.level_ticks = 0;
     game.level_limit = MAX_LEVEL;
     game.level = 0;
+
+    game.lose = 0;
+    game.lose_ticks = 0;
+
     timer_setPeriod(game.level_timer, 0.2);
     timer_start(game.level_timer);
 
