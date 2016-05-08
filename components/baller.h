@@ -19,6 +19,7 @@ typedef struct {
     _OC *sort_oc;
     _TIMER *rol_timer;
     uint8_t rol_ticks;
+    uint16_t sorter_ticks;
     uint8_t rol_limit;
     uint8_t chaos;
     uint8_t chaos_limit;

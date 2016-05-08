@@ -13,8 +13,10 @@ Baller baller;
 
 #define E 2.71
 #define ROL_LIMIT_MAX 100
+#define SORTER_LIMIT 500
 #define CHAOS_LIMIT_MAX 100
 
+uint8_t sort_direction = 0;
 void rest_baller(void) {
     if (baller.state != baller.last_state) {  // if we are entering the state, do intitialization stuff
         baller.last_state = baller.state;
@@ -24,26 +26,35 @@ void rest_baller(void) {
     if (timer_flag(baller.rol_timer)) {
         timer_lower(baller.rol_timer);
         baller.rol_ticks++;
+        baller.sorter_ticks++;
         uint8_t chaos = rand()%100;
         if (chaos > baller.chaos_limit){
             baller.rol_ticks++;
         }
         if(baller.rol_ticks >= baller.rol_limit){
             if(rand()%2){
-                pin_write(baller.sort_motor, 0x8000);
                 if(!baller.shooter->shoot){
                     baller.shooter->shoot = 1;
                 } else {
                     baller.launcher->launch = 1;
                 }
             } else {
-                pin_write(baller.sort_motor, 0x6400);
                 if(!baller.launcher->launch){
                     baller.launcher->launch = 1;
                 } else {
                     baller.shooter->shoot = 1;
                 }
             }
+        }
+        if (baller.sorter_ticks == SORTER_LIMIT) {
+            if (sort_direction) {
+                pin_write(baller.sort_motor, 0x5000);
+                sort_direction = 0;
+            } else {
+                pin_write(baller.sort_motor, 0x7000);
+                sort_direction = 1;
+            }
+            baller.sorter_ticks = 0;
         }
     }
 
@@ -58,6 +69,7 @@ void over_baller(void) {
 
         baller.rol_limit = 100;
         baller.rol_ticks = 0;
+        baller.sorter_ticks = 0;
         timer_lower(baller.rol_timer);
         timer_stop(baller.rol_timer);
         pin_write(baller.sort_motor, 0);
