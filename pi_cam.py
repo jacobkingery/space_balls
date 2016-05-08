@@ -11,6 +11,7 @@ class Camera(object):
     def __init__(self):
         self.pin = 8
         self.r_threshold = 5.0
+	self.crop_size = 10
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.pin, GPIO.OUT)
@@ -20,8 +21,8 @@ class Camera(object):
         return bool(rgb[0] > self.r_threshold)
 
     def process(self, img):
-        cropped = img[40:80,60:100,:]
-        avg = cropped.reshape((1600, 1, 3)).mean(axis=0).flatten()
+        cropped = img[60-self.crop_size:60+self.crop_size,80-self.crop_size:80+self.crop_size,:]
+        avg = cropped.reshape(((self.crop_size*2)**2, 1, 3)).mean(axis=0).flatten()
         has_ball = self.is_ball(avg)
         GPIO.output(self.pin, has_ball)
         print '{:.2f} {:.2f} {:.2f}'.format(*avg), has_ball
