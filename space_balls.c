@@ -24,7 +24,7 @@ int16_t main(void) {
     init_pin();
     init_timer();
     init_i2c();
-    InitUSB();                              // initialize the USB registers and serial interface engine
+    InitUSB();
     init_oc();
 
     init_display(&i2c3, 0x70, 0x71);

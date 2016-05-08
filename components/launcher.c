@@ -16,15 +16,15 @@ void launch_launcher(void) {
         launcher.last_state =  launcher.state;
     }
 
-    if (!pin_read(launcher.load_sensor)){
+    if (!pin_read(launcher.load_sensor)) {
         launcher.loaded = 1;
         led_on(&led1);
         pin_clear(launcher.elevator_motor);
     }
 
-    if(launcher.loaded){
+    if (launcher.loaded) {
         pin_set(launcher.launch_motor);
-        if(!pin_read(launcher.launch_sensor)){
+        if (!pin_read(launcher.launch_sensor)) {
             limit_flag = 1;
         }
 
@@ -32,11 +32,11 @@ void launch_launcher(void) {
             limit_counter++;
         }
 
-        if (limit_counter >= 100){
+        if (limit_counter >= 100) {
             launcher.state = rest_launcher;
         }
     } else {
-        if (launcher.over){
+        if (launcher.over) {
             launcher.state = over_launcher;
         }
     }
@@ -57,17 +57,17 @@ void rest_launcher(void) {
         launcher.last_state = launcher.state;
     }
 
-    if (!pin_read(launcher.load_sensor)){
+    if (!pin_read(launcher.load_sensor)) {
         launcher.loaded = 1;
         led_on(&led1);
         pin_clear(launcher.elevator_motor);
     }
 
-    if (launcher.over){
+    if (launcher.over) {
         launcher.state = over_launcher;
     }
 
-    if (launcher.launch){
+    if (launcher.launch) {
         launcher.state = launch_launcher;
     }
 
@@ -82,7 +82,7 @@ void over_launcher(void) {
     }
 
     // Check for state transitions
-    if(!launcher.over){
+    if (!launcher.over) {
         launcher.state = rest_launcher;
     }
     if (launcher.state != launcher.last_state) {  // if we are leaving the state, do clean up stuff
