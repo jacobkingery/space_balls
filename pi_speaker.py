@@ -11,10 +11,10 @@ class Speaker(object):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.pin, GPIO.IN)
         self.sounds = {
-            0: pygame.mixer.Sound('sounds/start.ogg'),
-            1: pygame.mixer.Sound('sounds/shoot.ogg'),
-            2: pygame.mixer.Sound('sounds/hit.ogg'),
-            3: pygame.mixer.Sound('sounds/lose.ogg')
+            0: pygame.mixer.Sound('/home/pi/space_balls/sounds/start.ogg'),
+            1: pygame.mixer.Sound('/home/pi/space_balls/sounds/shoot.ogg'),
+            2: pygame.mixer.Sound('/home/pi/space_balls/sounds/hit.ogg'),
+            3: pygame.mixer.Sound('/home/pi/space_balls/sounds/lose.ogg')
         }
         self.SEND_SOUND = 0;
         self.dev = usb.core.find(idVendor = 0x6666, idProduct = 0x0003)
@@ -26,15 +26,12 @@ class Speaker(object):
             self.receive_sound(self.pin)
 
     def receive_sound(self, channel):
-        try:
-            sound = self.dev.ctrl_transfer(0xC0, self.SEND_SOUND, 0, 0, 1)[0]
-            if sound in self.sounds:
-                print 'Playing:', sound
-                self.sounds[sound].play()
-            else:
-                print 'Sound not found'
-        except:
-            print 'Receiving failure'
+        sound = self.dev.ctrl_transfer(0xC0, self.SEND_SOUND, 0, 0, 1)[0]
+        if sound in self.sounds:
+            print 'Playing:', sound
+            self.sounds[sound].play()
+        else:
+            print 'Sound not found'
 
 
 def main():
@@ -50,4 +47,5 @@ def main():
             GPIO.cleanup()
 
 if __name__ == '__main__':
+    time.sleep(1);
     main()
