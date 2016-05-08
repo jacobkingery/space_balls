@@ -25,7 +25,7 @@ typedef struct {
     _TIMER *decay_timer;
     uint8_t decay_ticks;
     uint8_t decay_limit;
-    uint8_t lose;
+    uint8_t lose_flag;
     uint8_t lose_ticks;
     uint8_t life;
     uint16_t score;

@@ -44,13 +44,14 @@ void rest_gun(void) {
 }
 
 void over_gun(void) {
-    if (!pin_read(gun.l_trigger) || !pin_read(gun.r_trigger)) {
-        gun.hit_flag = 1;
-    } else {
-        gun.hit_flag = 0;
-    }
     if (gun.level) {
         gun.state = rest_gun;
+    } else {
+        if (!pin_read(gun.l_trigger) || !pin_read(gun.r_trigger)) {
+            gun.hit_flag = 1;
+        } else {
+            gun.hit_flag = 0;
+        }
     }
 }
 

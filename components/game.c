@@ -74,7 +74,7 @@ void rest_game(void) {
     // Check for state transitions
     if (!game.life) {
         game.state = over_game;
-        game.lose = 1;
+        game.lose_flag = 1;
     }
 }
 
@@ -103,13 +103,13 @@ void over_game(void) {
         game.hit_flag = 0;
     }
 
-    if (game.lose) {
+    if (game.lose_flag) {
         if (timer_flag(game.level_timer)) {
             timer_lower(game.level_timer);
             game.lose_ticks++;
             if (game.lose_ticks == MAX_LOSE) {
                 trigger_audio(LOSE);
-                game.lose = 0;
+                game.lose_flag = 0;
             }
         }
     }
@@ -130,7 +130,7 @@ void over_game(void) {
         game.level = 1;
         game.life = MAX_LIFE;
         game.score = 0;
-        game.lose = 0;
+        game.lose_flag = 0;
         blink_display(game.score_display, 0);
         write_display(game.score_display, game.score, 0);
         timer_start(game.level_timer);
@@ -152,7 +152,7 @@ void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display 
     game.level_limit = MAX_LEVEL;
     game.level = 0;
 
-    game.lose = 0;
+    game.lose_flag = 0;
     game.lose_ticks = 0;
 
     timer_setPeriod(game.level_timer, 0.2);
