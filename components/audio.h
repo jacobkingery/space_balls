@@ -6,14 +6,14 @@
 #include "ui.h"
 #include "state.h"
 
-typedef enum{
+typedef enum {
     START,
     SHOOT,
     HIT,
     LOSE
 } Sound;
 
-typedef enum{
+typedef enum {
     SEND_SOUND
 } Request;
 

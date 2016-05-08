@@ -47,7 +47,7 @@ void rest_game(void) {
     if (timer_flag(game.decay_timer)) {
         timer_lower(game.decay_timer);
         game.decay_ticks++;
-        if(game.decay_ticks == game.decay_limit){
+        if (game.decay_ticks == game.decay_limit) {
             game.life--;
             game.decay_ticks = 0;
         }
@@ -56,23 +56,23 @@ void rest_game(void) {
     if (timer_flag(game.level_timer)) {
         timer_lower(game.level_timer);
         game.level_ticks++;
-        if(game.level_ticks == game.level_limit){
+        if (game.level_ticks == game.level_limit) {
             game.state = level_game;
         }
     }
 
-    if (game.hit_flag){
+    if (game.hit_flag) {
         game.score += 25;
         game.hit_flag = 0;
         game.life += 10;
-        if (game.life > MAX_LIFE){
+        if (game.life > MAX_LIFE) {
             game.life = MAX_LIFE;
         }
         write_display(game.score_display, game.score, 0);
     }
 
     // Check for state transitions
-    if (!game.life){
+    if (!game.life) {
         game.state = over_game;
         game.lose = 1;
     }
@@ -94,7 +94,7 @@ void over_game(void) {
         timer_stop(game.level_timer);
         timer_stop(game.decay_timer);
         update_bar_pix(0, &start_color, &end_color);
-        if (game.score > game.high){
+        if (game.score > game.high) {
             game.high = game.score;
         }
         write_display(game.high_display, game.high, 0);
@@ -103,11 +103,11 @@ void over_game(void) {
         game.hit_flag = 0;
     }
 
-    if (game.lose){
+    if (game.lose) {
         if (timer_flag(game.level_timer)) {
             timer_lower(game.level_timer);
             game.lose_ticks++;
-            if(game.lose_ticks == MAX_LOSE){
+            if (game.lose_ticks == MAX_LOSE) {
                 trigger_audio(LOSE);
                 game.lose = 0;
             }
@@ -176,7 +176,7 @@ void init_game(_TIMER *level_timer, _TIMER *decay_timer, _PIN *coin_op, Display 
 
 uint8_t run_game(uint8_t hit_flag) {
     game.hit_flag = hit_flag;
-    if(game.hit_flag){
+    if (game.hit_flag) {
         led_on(&led3);
     } else {
         led_off(&led3);

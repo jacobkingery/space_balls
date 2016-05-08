@@ -27,13 +27,13 @@ void shoot_shooter(void) {
         back_speed = MAX_SPEED - (rand()%speed_range);
     }
 
-    if (!pin_read(shooter.load_sensor)){
+    if (!pin_read(shooter.load_sensor)) {
         shooter.loaded = 1;
         pin_clear(shooter.elevator_motor);
         led_on(&led2);
     }
 
-    if(shooter.loaded){
+    if (shooter.loaded) {
         push_counter++;
         pin_set(shooter.push_motor);
         pin_write(shooter.top_spin_motor, top_speed);
@@ -42,7 +42,7 @@ void shoot_shooter(void) {
             shooter.state = rest_shooter;
         }
     } else {
-        if (shooter.over){
+        if (shooter.over) {
             shooter.state = over_shooter;
         }
     }
@@ -62,17 +62,17 @@ void rest_shooter(void) {
         shooter.last_state = shooter.state;
     }
 
-    if (!pin_read(shooter.load_sensor)){
+    if (!pin_read(shooter.load_sensor)) {
         shooter.loaded = 1;
         pin_clear(shooter.elevator_motor);
         led_on(&led2);
     }
 
-    if (shooter.over){
+    if (shooter.over) {
         shooter.state = over_shooter;
     }
 
-    if (shooter.shoot){
+    if (shooter.shoot) {
         shooter.state = shoot_shooter;
     }
 }
@@ -88,7 +88,7 @@ void over_shooter(void) {
     }
 
     // Check for state transitions
-    if(!shooter.over){
+    if (!shooter.over) {
         shooter.state = rest_shooter;
     }
 

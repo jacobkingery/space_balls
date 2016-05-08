@@ -28,18 +28,18 @@ void rest_baller(void) {
         baller.rol_ticks++;
         baller.sorter_ticks++;
         uint8_t chaos = rand()%100;
-        if (chaos > baller.chaos_limit){
+        if (chaos > baller.chaos_limit) {
             baller.rol_ticks++;
         }
-        if(baller.rol_ticks >= baller.rol_limit){
-            if(rand()%2){
-                if(!baller.shooter->shoot){
+        if (baller.rol_ticks >= baller.rol_limit) {
+            if (rand()%2) {
+                if (!baller.shooter->shoot) {
                     baller.shooter->shoot = 1;
                 } else {
                     baller.launcher->launch = 1;
                 }
             } else {
-                if(!baller.launcher->launch){
+                if (!baller.launcher->launch) {
                     baller.launcher->launch = 1;
                 } else {
                     baller.shooter->shoot = 1;
@@ -58,7 +58,7 @@ void rest_baller(void) {
         }
     }
 
-    if (!baller.level){
+    if (!baller.level) {
         baller.state = over_baller;
     }
 }
@@ -79,7 +79,7 @@ void over_baller(void) {
     }
 
     // Check for state transitions
-    if(baller.level){
+    if (baller.level) {
         baller.state = rest_baller;
     }
 
@@ -118,7 +118,7 @@ void run_baller(uint8_t level) {
     run_launcher();
     run_shooter();
 
-    if (baller.level != level){
+    if (baller.level != level) {
         baller.level = level;
         baller.shooter->level = level;
         baller.rol_limit = ROL_LIMIT_MAX - (.9*ROL_LIMIT_MAX/(1.0+pow(E, -baller.level+5)));
