@@ -11,7 +11,7 @@
 #include "pix.h"
 
 #define MAX_DECAY 100
-#define MAX_LOSE 10
+#define MAX_LOSE 6
 #define MAX_LIFE  100
 #define MAX_LEVEL 100
 #define E 2.71
@@ -84,7 +84,9 @@ void over_game(void) {
     if (game.state != game.last_state) {  // if we are entering the state, do intitialization stuff
         game.last_state = game.state;
 
+        game.hit_flag = 0;
         game.level_ticks = 0;
+
         game.level_limit = MAX_LEVEL;
         game.level = 0;
 
@@ -94,15 +96,17 @@ void over_game(void) {
         timer_lower(game.level_timer);
         timer_lower(game.decay_timer);
         update_bar_pix(0, &start_color, &end_color);
+
         if (game.score > game.high) {
             game.high = game.score;
         }
+
         write_display(game.high_display, game.high, 0);
         write_display(game.score_display, game.score, 0);
         blink_display(game.score_display, 1);
-        game.hit_flag = 0;
     }
 
+    //run state logic
     if (game.lose_flag) {
         if (timer_flag(game.level_timer)) {
             timer_lower(game.level_timer);
@@ -114,7 +118,6 @@ void over_game(void) {
         }
     }
 
-    //run state logic
     if (pin_read(game.coin_op)) {
         game.coin_flag = 1;
         trigger_audio(START);
@@ -131,6 +134,7 @@ void over_game(void) {
         game.life = MAX_LIFE;
         game.score = 0;
         game.lose_flag = 0;
+        game.lose_ticks = 0;
         blink_display(game.score_display, 0);
         write_display(game.score_display, game.score, 0);
     }

@@ -23,6 +23,10 @@ void shoot_gun(void) {
     }
 
     gun.state = rest_gun;
+
+    if (!gun.level) {
+        gun.state = over_gun;
+    }
 }
 
 void rest_gun(void) {
@@ -44,6 +48,13 @@ void rest_gun(void) {
 }
 
 void over_gun(void) {
+    if (gun.state != gun.last_state) {  // if we are entering the state, do intitialization stuff
+        gun.last_state = gun.state;
+        timer_lower(gun.rof_timer);
+        timer_stop(gun.rof_timer);
+        gun.hit_flag = 0;
+    }
+
     if (gun.level) {
         gun.state = rest_gun;
     } else {
@@ -52,6 +63,10 @@ void over_gun(void) {
         } else {
             gun.hit_flag = 0;
         }
+    }
+    if (gun.state != gun.last_state) {  // if we are entering the state, do intitialization stuff
+        timer_start(gun.rof_timer);
+        gun.hit_flag = 0;
     }
 }
 
